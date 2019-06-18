@@ -19,10 +19,15 @@ export class ReportesSegmentacionComponent implements OnInit {
 
   }
 
+  selectUbigeo(row,event) {
+    //console.log('row>>', row);
+
+  }
+
   ngOnInit() {
     this.reporteService.getLoadedDataSource().subscribe(res => {
         console.log('getLoadedDataMapaSource res', res);
-        /*this.ambito = res['ambito'];*/
+        this.ambito = res['ambito'];
         this.data = res;
 
       }
@@ -30,5 +35,6 @@ export class ReportesSegmentacionComponent implements OnInit {
 
 
   }
+
 
 }

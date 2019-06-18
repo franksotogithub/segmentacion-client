@@ -195,12 +195,12 @@ export class EsriMapComponent implements OnInit {
       });
 
 
-      this.reporteService.getDataAvanceSegmentacion({'ambito':0}).subscribe(res => {
+      /*this.reporteService.getDataAvanceSegmentacion({'ambito':0}).subscribe(res => {
           console.log('getDataAvanceSegmentacion res', res);
         }
-      );
+      );*/
 
-      /*this.reporteService.changeParametros({'ambito': 0});*/
+      this.reporteService.getDataAvanceSegmentacion({'ambito': 0});
 
 
       this.reporteService.getLoadedDataMapaSource().subscribe(res => {

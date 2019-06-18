@@ -99,7 +99,7 @@ export class ReporteService {
     };
   }
 
-  getDataAvanceSegmentacion(parametros): Observable<any>
+  getDataAvanceSegmentacion(parametros)
   {
     let url='';
 
@@ -113,7 +113,7 @@ export class ReporteService {
     }
 
 
-    return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
+    this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
       tap(response => {
 
         this.loadedDataSource.next(response);
