@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ReporteService} from '../services/reporte.service';
+import {ParametrosService} from '../services/parametros.service';
 
 @Component({
   selector: 'app-reportes-segmentacion',
@@ -15,21 +16,19 @@ export class ReportesSegmentacionComponent implements OnInit {
   data: any[];
   ambito: number = 0;
 
-  constructor(private reporteService: ReporteService) {
+  constructor(private reporteService: ReporteService , private parametrosService: ParametrosService  ) {
 
   }
 
   selectUbigeo(row,event) {
-    //console.log('row>>', row);
-
+    let ambito=this.ambito+1;
+    this.parametrosService.cambiarParametros({ambito: ambito ,codigo: row.codigo});
   }
 
   ngOnInit() {
     this.reporteService.getLoadedDataSource().subscribe(res => {
-        console.log('getLoadedDataMapaSource res', res);
-        this.ambito = res['ambito'];
+        this.ambito=this.parametrosService.params.ambito;
         this.data = res;
-
       }
     );
 

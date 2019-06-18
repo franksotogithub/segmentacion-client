@@ -4,7 +4,8 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
-import {ReporteAvanceSegmentacion} from '../interfaces/reporte'
+import {ReporteAvanceSegmentacion} from '../interfaces/reporte';
+import {ParametrosService} from 'src/app/services/parametros.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,14 @@ export class ReporteService {
   private parametros: any={ ambito:0,codigo:'00'} ;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient ,private parametrosServices : ParametrosService) {
 
-    /*this.getParamsSource().subscribe(parametros=>{
-        console.log(parametros);
-        this.getDataAvanceSegmentacion(parametros);
-    });*/
+
+    this.parametrosServices.getparamsSource().subscribe(parametros=>{
+
+      console.log('parametros>>>',parametros);
+      this.getDataAvanceSegmentacion(parametros).subscribe(res=>{console.log('res>>>',res);});
+    });
   }
 
 
@@ -99,21 +102,20 @@ export class ReporteService {
     };
   }
 
-  getDataAvanceSegmentacion(parametros)
+  getDataAvanceSegmentacion(parametros): Observable<any>
   {
     let url='';
 
-    parametros.hasOwnProperty('ambito')? this.parametros['ambito']=parametros['ambito']:parametros.hasOwnProperty('codigo')?this.parametros['codigo']=parametros['codigo']:true;
 
-    if(this.parametros.codigo!=='00' && parametros.codigo!==undefined){
-      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${this.parametros.ambito}/${this.parametros.codigo}`;
+    if(parametros.codigo!=='00' && parametros.codigo!==undefined){
+      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}/${parametros.codigo}`;
     }
     else{
-      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${this.parametros.ambito}`;
+      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}`;
     }
 
 
-    this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
+    return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
       tap(response => {
 
         this.loadedDataSource.next(response);

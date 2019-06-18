@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {loadModules} from 'esri-loader';
 import {environment} from 'src/environments/environment';
 import {ReporteService} from '../services/reporte.service';
+import {ParametrosService} from '../services/parametros.service';
 
 @Component({
   selector: 'app-esri-map',
@@ -38,8 +39,9 @@ export class EsriMapComponent implements OnInit {
     {id: 3, color: '#ED7203'},
     {id: 4, color: '#E20613'},
   ];
+  private codigo = '00';
 
-  constructor(private reporteService: ReporteService) {
+  constructor(private reporteService: ReporteService, private parametrosService: ParametrosService) {
   }
 
   cambiarAmbito(ambito) {
@@ -179,35 +181,75 @@ export class EsriMapComponent implements OnInit {
     }
   }
 
+  getQueryText(arrayUbigeos: string[]) {
+    var queryText = "";
+    var num_features = arrayUbigeos.length;
+
+    if (num_features > 0) {
+      var tamUbigeo = arrayUbigeos[0].length;
+      if (tamUbigeo == 2) {
+        queryText = "CCDD IN (";
+      } else if (tamUbigeo == 4) {
+        queryText = " CCDD+CCPP IN (";
+      } else if (tamUbigeo == 6) {
+        queryText = " CCDD+CCPP+CCDI IN (";
+      }
+      arrayUbigeos.forEach(function (ubigeo) {
+        num_features--;
+        if (num_features > 0) queryText = queryText + ubigeo + ","
+        else queryText = queryText + ubigeo + ")"
+      });
+    }
+    return queryText;
+  }
+
+
+  async getExtentUbigeos(queryText: string, urlService: string) {
+    try {
+      const [QueryTask, Query] = await loadModules(['esri/tasks/QueryTask', 'esri/tasks/query'], this.optionsApi);
+
+      let queryTask = new QueryTask(urlService);
+      let query = new Query();
+      query.returnGeometry = true;
+      query.outFields = ['*'];
+      query.where = queryText;
+
+
+      queryTask.executeForExtent(query, (result) => {
+        console.log('result>>>>', result);
+        this.map.setExtent(result.extent);
+
+      });
+
+    } catch (error) {
+      console.log('EsriLoader: ', error);
+
+    }
+  }
+
 
   ngOnInit() {
     this.inicializarMapa().then(_ => {
       this.ambitos.forEach(a => {
-
         this.addCapa(this.apiEndPointMap, a).then(_ => {
 
-          /*if (a === 0) {
-            this.esriMapService.obtenerDatosMapaTematico().subscribe(res => {
-            });
-          }*/
         });
 
       });
 
 
-      /*this.reporteService.getDataAvanceSegmentacion({'ambito':0}).subscribe(res => {
-          console.log('getDataAvanceSegmentacion res', res);
-        }
-      );*/
-
-      this.reporteService.getDataAvanceSegmentacion({'ambito': 0});
-
-
       this.reporteService.getLoadedDataMapaSource().subscribe(res => {
-          console.log('getLoadedDataMapaSource res', res);
-          this.ambito = res['ambito'];
+          this.ambito = this.parametrosService.params.ambito;
+          this.codigo = this.parametrosService.params.codigo;
+
           this.actualizarCapaTematico(res, this.ambito, [0, 1, 2, 3, 4]).then(_ => {
             this.cambiarAmbito(this.ambito);
+            if (this.codigo !== '00') {
+              let queryText = this.getQueryText([this.codigo]);
+              let urlText = `${this.apiEndPointMap}/${this.ambito}`;
+              this.getExtentUbigeos(queryText, urlText);
+            }
+
           });
         }
       );
