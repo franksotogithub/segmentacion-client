@@ -56,7 +56,7 @@ export class ReporteService {
   private formatDataMapa(response: ReporteAvanceSegmentacion[]) {
     let res = {};
     let datos = response.map(x => {
-      return {'codigo': x.codigo, 'valor': x.porcent_segm};
+      return {'codigo': x.codigo, 'valor': x.porcent_segm ,'text':x.descripcion};
     });
     res['data'] = this.getColorPorDato(datos, this.rangos, this.colores);
     res['ambito'] =this.parametros.ambito;
