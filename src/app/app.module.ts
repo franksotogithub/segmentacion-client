@@ -11,6 +11,7 @@ import { ReportesSegmentacionComponent } from './reportes-segmentacion/reportes-
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EsriMapComponent } from './esri-map/esri-map.component';
 import {JwtInterceptor } from './helpers/jwt.interceptor';
+import {ErrorInterceptor } from './helpers/error.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -31,6 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

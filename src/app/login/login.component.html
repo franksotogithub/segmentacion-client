@@ -2,6 +2,8 @@
   <section fxLayout="row" fxLayoutAlign="center center">
     <mat-card fxFlex="500px" fxFlex.xs="100%">
 
+
+
       <mat-card-title>
       <mat-icon class="icon-login" color="primary"> account_circle</mat-icon>
 
@@ -10,23 +12,26 @@
 
 
 
-
-
       <mat-card-content>
 
-        <mat-form-field   [color]="primary" appearance="outline"  class="example-full-width">
-          <input matInput placeholder="Usuario" [(ngModel)]="username" name="username" required>
-        </mat-form-field>
+
+      <form>
+          <mat-form-field   [color]="primary" appearance="outline"  class="example-full-width">
+            <input matInput placeholder="Usuario" [(ngModel)]="username" name="username" required>
+          </mat-form-field>
 
 
-        <mat-form-field  [color]="primary" appearance="outline" class="example-full-width">
-          <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
-        </mat-form-field>
+          <mat-form-field  [color]="primary" appearance="outline" class="example-full-width">
+            <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
+          </mat-form-field>
+
+        <!--<mat-card-actions>-->
+          <button mat-raised-button (click)="login()" color="primary">Ingresar</button>
+        <!--</mat-card-actions>-->
+          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+        </form>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button (click)="login()" color="primary">Ingresar</button>
-      </mat-card-actions>
-
     </mat-card>
   </section>
 
