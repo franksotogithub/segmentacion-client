@@ -2,3 +2,72 @@ table{
   width: 100%;
 }
 
+
+.contenedor-itemUbigeos{
+  background-color: #f5f5f5;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  height: 100%;
+  position: relative;
+
+}
+
+
+.contenedor-itemUbigeos> div.dmk-breadcrumbv1{
+
+  background-color: #1B3C71;
+  min-height: 10px;
+  max-height: 100%;
+  margin: auto;
+  margin-left: 0px;
+  margin-right: 10px;
+  padding: 10px 12px;
+  padding-left: 22px;
+  line-height: 140%;
+  font-size: 12px;
+  position: relative;
+  cursor:pointer;
+  color: white;
+}
+
+.contenedor-itemUbigeos> div.dmk-breadcrumbv1:after {
+   content: "";
+   display: block;
+   background-color: transparent;
+   position: absolute;
+   z-index: 1;
+   top: 0;
+   right: -14px;
+
+   width: 0;
+   height: 0;
+   border-style: solid;
+   border-width: 18px 0 18px 14px;
+   border-color: transparent transparent transparent #1B3C71;
+ }
+
+.contenedor-itemUbigeos> div.dmk-breadcrumbv1:before {
+   content: "";
+   display: block;
+   background-color: transparent;
+   position: absolute;
+   z-index: 0;
+   top: 0;
+   left: 0px;
+   width: 0;
+   height: 0;
+   border-style: solid;
+   border-width: 18px 0 18px 14px;
+   border-color: transparent transparent transparent #f5f5f5;
+ }
+
+.contenedor-itemUbigeos> div.dmk-breadcrumbv1:hover {
+    background-color: #ed7203;
+  }
+
+.contenedor-itemUbigeos> div.dmk-breadcrumbv1:hover:after {
+  border-color: transparent transparent transparent #ed7203;
+
+}
+

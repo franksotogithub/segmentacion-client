@@ -1,13 +1,22 @@
 
+<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
 
-  <div >
-    <app-esri-map>
+  <div fxFlex="50%">
+    <div >
+      <app-esri-map>
 
-    </app-esri-map>
+      </app-esri-map>
+    </div>
   </div>
 
 
+  <div fxFlex="50%">
   <div>
+    <div class="contenedor-itemUbigeos">
+      <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
+        {{itemUbigeo.text}}
+      </div>
+    </div>
 
 
     <table mat-table [dataSource]="data" class="mat-elevation-z8">
@@ -22,3 +31,5 @@
 
   </div>
 
+  </div>
+</div>

@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.router.navigate(['reportes']);
+          //location.reload();
+
         },
         error => {
           this.error = error;

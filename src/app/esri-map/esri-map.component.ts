@@ -12,12 +12,9 @@ import {ParametrosService} from '../services/parametros.service';
 export class EsriMapComponent implements OnInit {
   @ViewChild('mapViewNode', {static: false})
   private mapViewEl: ElementRef;
-
   private zoom = 6;
   private center: Array<number> = [-75, -9.305];
-
   private basemap = 'streets';
-  private loaded = false;
   private map: any;
   private showLabels = true;
   private optionsApi = {
@@ -25,28 +22,21 @@ export class EsriMapComponent implements OnInit {
 
   };
   private apiEndPointMap = environment.apiEndPointMap;
-  private anio = 2011;
   private ambitoInicial = 0;
-  private tipoValor = 1;
+
   private ambitos = [2, 1, 0];
   private ambito = 0;
   private colorGris = '#9c9c9c';
   private capasTematicos = [];
-  private colores = [
-    {id: 0, color: '#FFF9D1'},
-    {id: 1, color: '#FFF16E'},
-    {id: 2, color: '#FAB700'},
-    {id: 3, color: '#ED7203'},
-    {id: 4, color: '#E20613'},
-  ];
+  private datos=[];
   private codigo = '00';
-
+  private text = '';
   constructor(private reporteService: ReporteService, private parametrosService: ParametrosService) {
   }
 
   cambiarAmbito(ambito) {
 
-    console.log('cambio de ambito', ambito);
+
     this.capasTematicos.forEach(capa => {
       if (capa.id == ambito) {
         capa.layer.setVisibility(true);
@@ -90,6 +80,24 @@ export class EsriMapComponent implements OnInit {
     }
   }
 
+  /*selectUbigeo(row,event) {
+    let ambito=this.ambito+1;
+    this.parametrosService.cambiarParametros({ambito: ambito ,codigo: row.codigo ,text:row.descripcion});
+  }*/
+
+
+  selectUbigeo(options) {
+    let ambito=this.ambito+1;
+    this.codigo=options.atributos['CODIGO'];
+    console.log('datos>>>',this.datos);
+    this.text=this.datos['data'].find(ubigeo=> ubigeo.codigo==this.codigo).text;
+    this.parametrosService.cambiarParametros({ambito: ambito ,codigo: this.codigo ,text:this.text});
+  }
+
+  selectFeature(options,abrir){
+    this.codigo=options.atributos['CODIGO'];
+    this.actualizarCapaTematico(this.datos,this.ambito,[this.codigo]);
+  }
 
   async addCapa(url, index) {
     try {
@@ -102,15 +110,36 @@ export class EsriMapComponent implements OnInit {
       var layer = new FeatureLayer(urlFeature, {
         maxScale: 0,
         minScale: 0,
-        showLabels: false,
+        showLabels: true,
         visible: visible
 
       });
 
       capa = {layer: layer, id: index};
 
+
+      layer.on("click", (event)=> {
+        let options ={atributos:'00',geometry:'',screenPoint:'' };
+        options.atributos=event.graphic.attributes;
+        options.geometry=event.graphic.geometry;
+        options.screenPoint=event.screenPoint;
+        this.selectFeature(options,1);
+
+      });
+
+
+      layer.on("dbl-click", (event)=> {
+        let options ={atributos:'00',geometry:'',screenPoint:'' };
+        options.atributos=event.graphic.attributes;
+        options.geometry=event.graphic.geometry;
+        options.screenPoint=event.screenPoint;
+        this.selectUbigeo(options);
+
+      });
+
       this.map.addLayer(layer);
       this.capasTematicos.push(capa);
+
 
 
     } catch (error) {
@@ -120,7 +149,7 @@ export class EsriMapComponent implements OnInit {
   }
 
 
-  async actualizarCapaTematico(res, index, estratos) {
+  async actualizarCapaTematico(res, index, codigos) {
     try {
       const [Color, SimpleFillSymbol, SimpleLineSymbol, UniqueValueRenderer] = await loadModules(['esri/Color',
         'esri/symbols/SimpleFillSymbol', 'esri/symbols/SimpleLineSymbol',
@@ -128,21 +157,29 @@ export class EsriMapComponent implements OnInit {
 
       var c = [];
       var color;
-      var found;
+      var found = 1;
       var outline = 1;
       var uniqueValueInfos = res.data.map(e => {
         color = e.color;
         outline = 1;
         c = this.hex2rgb(color).rgb;
 
-        found = estratos.find(estrato => e.estrato === estrato);
+        if(codigos.length>0 ){
+          console.log(codigos);
 
-        if (found == undefined) {
-          outline = 0;
-          c.push(0.2);
-        } else {
+          found = codigos.find(codigo =>String( e.codigo) === String(codigo));
+        }
+
+
+
+
+        if (found) {
           outline = 1;
           c.push(1);
+
+        } else {
+          outline = 0.5;
+          c.push(0.5);
         }
 
         return {
@@ -174,7 +211,8 @@ export class EsriMapComponent implements OnInit {
       capa['datos'] = res;
       capa.layer.setRenderer(layerRenderer);
       capa.layer.redraw();
-
+      //capa.layer.set showLabels: true,
+      //capa.layer.set(showLabels: true,
 
     } catch (error) {
       console.log('EsriLoader: ', error);
@@ -241,18 +279,23 @@ export class EsriMapComponent implements OnInit {
       this.reporteService.getLoadedDataMapaSource().subscribe(res => {
           this.ambito = this.parametrosService.params.ambito;
           this.codigo = this.parametrosService.params.codigo;
-
-          this.actualizarCapaTematico(res, this.ambito, [0, 1, 2, 3, 4]).then(_ => {
+          this.datos = res;
+          this.actualizarCapaTematico(res, this.ambito, []).then(_ => {
             this.cambiarAmbito(this.ambito);
             if (this.codigo !== '00') {
               let queryText = this.getQueryText([this.codigo]);
               let urlText = `${this.apiEndPointMap}/${this.ambito}`;
               this.getExtentUbigeos(queryText, urlText);
+            } else {
+              this.map.centerAndZoom(this.center, this.zoom);
             }
 
           });
         }
       );
+
+
+      //this.map.on()
 
     });
 
