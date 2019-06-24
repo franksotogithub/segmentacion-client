@@ -13,13 +13,15 @@ import { EsriMapComponent } from './esri-map/esri-map.component';
 import {JwtInterceptor } from './helpers/jwt.interceptor';
 import {ErrorInterceptor } from './helpers/error.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ReportesSegmentacionComponent,
-    EsriMapComponent
+    EsriMapComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -38,4 +40,5 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }

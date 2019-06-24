@@ -11,8 +11,18 @@ import {ParametrosService} from '../services/parametros.service';
 export class ReportesSegmentacionComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['codigo', 'descripcion', 'cant_zona_marco', 'cant_zona_segm', 'porcent_segm'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
+  //displayedColumns: string[] = ['codigo', 'descripcion', 'cant_zona_marco', 'cant_zona_segm', 'porcent_segm'];
+
+  displayedColumns: any[] = [
+    {data:'codigo',label:'CODIGO'},
+    {data:'descripcion',label:'DESCRIPCION'},
+    {data:'cant_zona_marco',label:'MARCO ZONAS'},
+    {data:'cant_zona_segm',label:'ZONAS AVANC'},
+    {data:'porcent_segm',label:'PORCENT. AV.'}
+    ];
+
+  columnsToDisplay: string[] = this.displayedColumns.map(x=>{return x.data});
+  //columnsToDisplay: string[] = this.displayedColumns.slice();
   data: any[];
   ambito: number = 0;
   itemsUbigeos: any[]=[{'ambito':-1 ,'text':'PERU',codigo:'00'}];

@@ -1,5 +1,32 @@
-table{
+/*.example-container {
+  position: relative;
+  height: 850px;
+  overflow: auto;
+}*/
+tr mat-header-row{
+
+}
+
+.example-table-container {
+  position: relative;
+  height: 590px;
+  overflow: auto;
+}
+
+table {
   width: 100%;
+}
+tr.mat-header-row{
+  background: #3f51b5;
+
+}
+
+.mat-header-cell{
+  color: white;
+}
+
+tr.mat-row:hover{
+  background : #777 ;
 }
 
 
