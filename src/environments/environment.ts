@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndPointData: 'http://127.0.0.1:8010/',
+  //apiEndPointData: 'http://127.0.0.1:8010/',
+  apiEndPointData: 'http://localhost:3002/',
   apiEndPointMap: 'https://datacrim.inei.gob.pe/mapa/arcgis/rest/services/CARTOGRAFIA_BASE_INEI/LIMITE_TEMATICOS/MapServer/',
 };
 

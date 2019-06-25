@@ -39,16 +39,18 @@ export class ReporteService {
 
   private colorGris = '#9c9c9c';
 
-  private parametros: any={ ambito:0,codigo:'00'} ;
+  private parametros: any = {ambito: 0, codigo: '00'};
 
 
-  constructor(private http: HttpClient ,private parametrosServices : ParametrosService) {
+  constructor(private http: HttpClient, private parametrosServices: ParametrosService) {
 
 
-    this.parametrosServices.getparamsSource().subscribe(parametros=>{
+    this.parametrosServices.getparamsSource().subscribe(parametros => {
 
-      console.log('parametros>>>',parametros);
-      this.getDataAvanceSegmentacion(parametros).subscribe(res=>{console.log('res>>>',res);});
+      console.log('parametros>>>', parametros);
+      this.getDataAvanceSegmentacion(parametros).subscribe(res => {
+        console.log('res>>>', res);
+      });
     });
   }
 
@@ -56,10 +58,10 @@ export class ReporteService {
   private formatDataMapa(response: ReporteAvanceSegmentacion[]) {
     let res = {};
     let datos = response.map(x => {
-      return {'codigo': x.codigo, 'valor': x.porcent_segm ,'text':x.descripcion};
+      return {'codigo': x.codigo, 'valor': x.porcent_segm, 'text': x.descripcion};
     });
     res['data'] = this.getColorPorDato(datos, this.rangos, this.colores);
-    res['ambito'] =this.parametros.ambito;
+    res['ambito'] = this.parametros.ambito;
     return res;
   }
 
@@ -102,19 +104,18 @@ export class ReporteService {
     };
   }
 
-  getDataAvanceSegmentacion(parametros): Observable<any>
-  {
-    let url='';
+  getDataAvanceSegmentacion(parametros): Observable<any> {
+    let url = '';
 
-
+    /*
     if(parametros.codigo!=='00' && parametros.codigo!==undefined){
       url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}/${parametros.codigo}`;
     }
     else{
       url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}`;
     }
-
-
+    */
+    url = `${this.apiEndPointData}zonas/reportes/${parametros.ambito}/${parametros.codigo}`;
     return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
       tap(response => {
 
@@ -129,7 +130,7 @@ export class ReporteService {
     return this.loadedDataMapaSource;
   }
 
-  getLoadedDataSource():Observable<any>{
+  getLoadedDataSource(): Observable<any> {
     return this.loadedDataSource;
   }
 
