@@ -7,7 +7,7 @@ import {ParametrosService} from '../services/parametros.service';
 @Component({
   selector: 'app-esri-map',
   templateUrl: './esri-map.component.html',
-  styleUrls: ['./esri-map.component.css']
+  styleUrls: ['./esri-map.component.scss']
 })
 export class EsriMapComponent implements OnInit {
   @ViewChild('mapViewNode', {static: false})
@@ -24,13 +24,14 @@ export class EsriMapComponent implements OnInit {
   private apiEndPointMap = environment.apiEndPointMap;
   private ambitoInicial = 0;
 
-  private ambitos = [2, 1, 0];
+  private ambitos = [ 3,2,1,0];
   private ambito = 0;
   private colorGris = '#9c9c9c';
   private capasTematicos = [];
-  private datos=[];
+  private datos = [];
   private codigo = '00';
   private text = '';
+
   constructor(private reporteService: ReporteService, private parametrosService: ParametrosService) {
   }
 
@@ -39,11 +40,14 @@ export class EsriMapComponent implements OnInit {
 
     this.capasTematicos.forEach(capa => {
       if (capa.id == ambito) {
+        //capa.layer.setMaxScale(0);
+        //capa.layer.setMinScale(0);
         capa.layer.setVisibility(true);
-        capa.layer.setMaxScale(0);
-        capa.layer.setMinScale(0);
+
+        //capa.layer.showLabels = true;
       } else {
         capa.layer.setVisibility(false);
+
       }
     });
   }
@@ -87,16 +91,16 @@ export class EsriMapComponent implements OnInit {
 
 
   selectUbigeo(options) {
-    let ambito=this.ambito+1;
-    this.codigo=options.atributos['CODIGO'];
-    console.log('datos>>>',this.datos);
-    this.text=this.datos['data'].find(ubigeo=> ubigeo.codigo==this.codigo).text;
-    this.parametrosService.cambiarParametros({ambito: ambito ,codigo: this.codigo ,text:this.text});
+    let ambito = this.ambito + 1;
+    this.codigo = options.atributos['CODIGO'];
+    console.log('datos>>>', this.datos);
+    this.text = this.datos['data'].find(ubigeo => ubigeo.codigo == this.codigo).text;
+    this.parametrosService.cambiarParametros({ambito: ambito, codigo: this.codigo, text: this.text});
   }
 
-  selectFeature(options,abrir){
-    this.codigo=options.atributos['CODIGO'];
-    this.actualizarCapaTematico(this.datos,this.ambito,[this.codigo]);
+  selectFeature(options, abrir) {
+    this.codigo = options.atributos['CODIGO'];
+    this.actualizarCapaTematico(this.datos, this.ambito, [this.codigo]);
   }
 
   async addCapa(url, index) {
@@ -118,28 +122,27 @@ export class EsriMapComponent implements OnInit {
       capa = {layer: layer, id: index};
 
 
-      layer.on("click", (event)=> {
-        let options ={atributos:'00',geometry:'',screenPoint:'' };
-        options.atributos=event.graphic.attributes;
-        options.geometry=event.graphic.geometry;
-        options.screenPoint=event.screenPoint;
+      layer.on('click', (event) => {
+        let options = {atributos: '00', geometry: '', screenPoint: ''};
+        options.atributos = event.graphic.attributes;
+        options.geometry = event.graphic.geometry;
+        options.screenPoint = event.screenPoint;
         this.selectFeature(options,1);
 
       });
 
 
-      layer.on("dbl-click", (event)=> {
-        let options ={atributos:'00',geometry:'',screenPoint:'' };
-        options.atributos=event.graphic.attributes;
-        options.geometry=event.graphic.geometry;
-        options.screenPoint=event.screenPoint;
+      layer.on('dbl-click', (event) => {
+        let options = {atributos: '00', geometry: '', screenPoint: ''};
+        options.atributos = event.graphic.attributes;
+        options.geometry = event.graphic.geometry;
+        options.screenPoint = event.screenPoint;
         this.selectUbigeo(options);
 
       });
 
       this.map.addLayer(layer);
       this.capasTematicos.push(capa);
-
 
 
     } catch (error) {
@@ -164,13 +167,11 @@ export class EsriMapComponent implements OnInit {
         outline = 1;
         c = this.hex2rgb(color).rgb;
 
-        if(codigos.length>0 ){
+        if (codigos.length > 0) {
           console.log(codigos);
 
-          found = codigos.find(codigo =>String( e.codigo) === String(codigo));
+          found = codigos.find(codigo => String(e.codigo) === String(codigo));
         }
-
-
 
 
         if (found) {
@@ -220,22 +221,22 @@ export class EsriMapComponent implements OnInit {
   }
 
   getQueryText(arrayUbigeos: string[]) {
-    var queryText = "";
+    var queryText = '';
     var num_features = arrayUbigeos.length;
 
     if (num_features > 0) {
       var tamUbigeo = arrayUbigeos[0].length;
       if (tamUbigeo == 2) {
-        queryText = "CCDD IN (";
+        queryText = 'CCDD IN (';
       } else if (tamUbigeo == 4) {
-        queryText = " CCDD+CCPP IN (";
+        queryText = ' CCDD+CCPP IN (';
       } else if (tamUbigeo == 6) {
-        queryText = " CCDD+CCPP+CCDI IN (";
+        queryText = ' UBIGEO IN (';
       }
       arrayUbigeos.forEach(function (ubigeo) {
         num_features--;
-        if (num_features > 0) queryText = queryText + ubigeo + ","
-        else queryText = queryText + ubigeo + ")"
+        if (num_features > 0) queryText = queryText + ubigeo + ','
+        else queryText = queryText + ubigeo + ')'
       });
     }
     return queryText;

@@ -6,7 +6,7 @@ import {ParametrosService} from '../services/parametros.service';
 @Component({
   selector: 'app-reportes-segmentacion',
   templateUrl: './reportes-segmentacion.component.html',
-  styleUrls: ['./reportes-segmentacion.component.css']
+  styleUrls: ['./reportes-segmentacion.component.scss']
 })
 export class ReportesSegmentacionComponent implements OnInit {
 

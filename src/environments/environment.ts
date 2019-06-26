@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  //apiEndPointData: 'http://127.0.0.1:8010/',
   apiEndPointData: 'http://localhost:3002/',
-  apiEndPointMap: 'https://datacrim.inei.gob.pe/mapa/arcgis/rest/services/CARTOGRAFIA_BASE_INEI/LIMITE_TEMATICOS/MapServer/',
+  apiEndPointMap: 'http://arcgis1.inei.gob.pe:6080/arcgis/rest/services/DESARROLLO/DATACRIM/MapServer/',
+  apiEndPointPdf: 'http://proyectos.inei.gob.pe/cpv2017/croquis-listado/urbano/CPV2017/',
+
 };
 
 /*

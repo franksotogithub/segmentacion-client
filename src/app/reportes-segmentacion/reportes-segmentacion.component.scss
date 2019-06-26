@@ -1,11 +1,6 @@
-/*.example-container {
-  position: relative;
-  height: 850px;
-  overflow: auto;
-}*/
-tr mat-header-row{
 
-}
+@import '../../main-theme';
+
 
 .example-table-container {
   position: relative;
@@ -17,8 +12,7 @@ table {
   width: 100%;
 }
 tr.mat-header-row{
-  background: #3f51b5;
-
+  background-color: mat-color($primary);
 }
 
 .mat-header-cell{
@@ -26,7 +20,7 @@ tr.mat-header-row{
 }
 
 tr.mat-row:hover{
-  background : #777 ;
+  background : mat-color($primary,300) ;
 }
 
 
@@ -43,7 +37,7 @@ tr.mat-row:hover{
 
 .contenedor-itemUbigeos> div.dmk-breadcrumbv1{
 
-  background-color: #1B3C71;
+  background-color: mat-color($primary-600);
   min-height: 10px;
   max-height: 100%;
   margin: auto;
@@ -71,7 +65,7 @@ tr.mat-row:hover{
    height: 0;
    border-style: solid;
    border-width: 18px 0 18px 14px;
-   border-color: transparent transparent transparent #1B3C71;
+   border-color: transparent transparent transparent mat-color($primary-600);
  }
 
 .contenedor-itemUbigeos> div.dmk-breadcrumbv1:before {
@@ -90,11 +84,11 @@ tr.mat-row:hover{
  }
 
 .contenedor-itemUbigeos> div.dmk-breadcrumbv1:hover {
-    background-color: #ed7203;
+    background-color: mat-color($accent);
   }
 
 .contenedor-itemUbigeos> div.dmk-breadcrumbv1:hover:after {
-  border-color: transparent transparent transparent #ed7203;
+  border-color: transparent transparent transparent mat-color($accent);
 
 }
 

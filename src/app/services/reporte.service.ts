@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
-import {ReporteAvanceSegmentacion} from '../interfaces/reporte';
+import {ReporteAvanceSegmentacion,ReporteCroquisListado} from '../interfaces/reporte';
 import {ParametrosService} from 'src/app/services/parametros.service';
 
 @Injectable({
@@ -17,6 +17,9 @@ export class ReporteService {
   loadedData$ = this.loadedDataSource.asObservable();
   private loadedDataMapaSource = new ReplaySubject<any>(1);
   loadedDataMapa$ = this.loadedDataMapaSource.asObservable();
+
+  private loadedDataSourceCroquisListado = new ReplaySubject<ReporteCroquisListado[]>(1);
+  loadedDataSourceCroquisListado$ = this.loadedDataSourceCroquisListado.asObservable();
 
   private paramsSource = new ReplaySubject<any>(1);
   paramsSource$ = this.paramsSource.asObservable();
@@ -115,7 +118,7 @@ export class ReporteService {
       url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}`;
     }
     */
-    url = `${this.apiEndPointData}zonas/reportes/${parametros.ambito}/${parametros.codigo}`;
+    url = `${this.apiEndPointData}reportes/reporte_avance_segm/${parametros.ambito}/${parametros.codigo}`;
     return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
       tap(response => {
 
@@ -123,6 +126,17 @@ export class ReporteService {
         this.loadedDataMapaSource.next(this.formatDataMapa(response));
       }),
       catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getIndicadorData `))
+    );
+  }
+
+
+  getDataReporteCroquisListado(ambito, codigo): Observable<any> {
+    let url = `${this.apiEndPointData}reportes/reporte_croquis_listado/${ambito}/${codigo}`;
+    return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
+      tap(response => {
+        this.loadedDataSourceCroquisListado.next(response);
+      }),
+      catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getDataReporteCroquisListado `))
     );
   }
 
