@@ -132,7 +132,7 @@ export class ReporteService {
 
   getDataReporteCroquisListado(ambito, codigo): Observable<any> {
     let url = `${this.apiEndPointData}reportes/reporte_croquis_listado/${ambito}/${codigo}`;
-    return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
+    return this.http.get<ReporteCroquisListado[]>(url).pipe(
       tap(response => {
         this.loadedDataSourceCroquisListado.next(response);
       }),

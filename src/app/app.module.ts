@@ -14,6 +14,7 @@ import {JwtInterceptor } from './helpers/jwt.interceptor';
 import {ErrorInterceptor } from './helpers/error.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuComponent } from './menu/menu.component';
+import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-detalle/reportes-segmentacion-detalle.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MenuComponent } from './menu/menu.component';
     LoginComponent,
     ReportesSegmentacionComponent,
     EsriMapComponent,
-    MenuComponent
+    MenuComponent,
+    ReportesSegmentacionDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ import { MenuComponent } from './menu/menu.component';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
   ],
+  entryComponents: [ ReportesSegmentacionDetalleComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
