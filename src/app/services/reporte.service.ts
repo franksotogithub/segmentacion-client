@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
-import {ReporteAvanceSegmentacion,ReporteCroquisListado} from '../interfaces/reporte';
+import {ReporteAvanceSegmentacion, ReporteCroquisListado} from '../interfaces/reporte';
 import {ParametrosService} from 'src/app/services/parametros.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ReporteService {
   private loadedDataMapaSource = new ReplaySubject<any>(1);
   loadedDataMapa$ = this.loadedDataMapaSource.asObservable();
 
-  private loadedDataSourceCroquisListado = new ReplaySubject<ReporteCroquisListado[]>(1);
+  private loadedDataSourceCroquisListado = new ReplaySubject<ReporteCroquisListado>(1);
   loadedDataSourceCroquisListado$ = this.loadedDataSourceCroquisListado.asObservable();
 
   private paramsSource = new ReplaySubject<any>(1);
@@ -55,6 +55,15 @@ export class ReporteService {
         console.log('res>>>', res);
       });
     });
+
+    this.parametrosServices.getparamsCroquisListadoSource().subscribe(parametros => {
+      console.log('parametros>>>', parametros);
+      this.getDataReporteCroquisListado(parametros).subscribe(res => {
+        console.log('res>>>', res);
+      });
+    });
+
+
   }
 
 
@@ -130,9 +139,9 @@ export class ReporteService {
   }
 
 
-  getDataReporteCroquisListado(ambito, codigo): Observable<any> {
-    let url = `${this.apiEndPointData}reportes/reporte_croquis_listado/${ambito}/${codigo}`;
-    return this.http.get<ReporteCroquisListado[]>(url).pipe(
+  getDataReporteCroquisListado(parametros): Observable<any> {
+    let url = `${this.apiEndPointData}reportes/reporte_croquis_listado/${parametros.ambito}/${parametros.codigo}`;
+    return this.http.get<ReporteCroquisListado>(url).pipe(
       tap(response => {
         this.loadedDataSourceCroquisListado.next(response);
       }),
@@ -146,6 +155,11 @@ export class ReporteService {
 
   getLoadedDataSource(): Observable<any> {
     return this.loadedDataSource;
+  }
+
+
+  getLoadedDataSourceCroquisListado(): Observable<any> {
+    return this.loadedDataSourceCroquisListado;
   }
 
 

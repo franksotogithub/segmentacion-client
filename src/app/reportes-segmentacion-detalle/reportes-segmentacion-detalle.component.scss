@@ -1,0 +1,44 @@
+@import '../../main-theme';
+
+
+
+mat-table{
+  //width: 100%;
+  position: relative;
+  height: 590px;
+  overflow: auto;
+}
+
+/*md-header-cell{
+  background: mat-color($primary);
+}*/
+
+.mat-header-row{
+  //width: 100%;
+  border: 1px solid mat-color($primary);
+  background: mat-color($primary);
+
+}
+
+.mat-header-cell{
+  color: white;
+}
+
+.mat-row {
+  border: 1px solid mat-color($primary);
+  cursor: pointer;
+}
+
+
+.mat-row:hover{
+  background : mat-color($primary,100) ;
+}
+
+.mat-row:active{
+
+  background : mat-color($primary,300) ;
+}
+
+.mat-row-select{
+  background : mat-color($primary,300) ;
+}

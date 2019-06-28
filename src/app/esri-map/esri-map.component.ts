@@ -93,7 +93,6 @@ export class EsriMapComponent implements OnInit {
   selectUbigeo(options) {
     let ambito = this.ambito + 1;
     this.codigo = options.atributos['CODIGO'];
-    console.log('datos>>>', this.datos);
     this.text = this.datos['data'].find(ubigeo => ubigeo.codigo == this.codigo).text;
     this.parametrosService.cambiarParametros({ambito: ambito, codigo: this.codigo, text: this.text});
   }

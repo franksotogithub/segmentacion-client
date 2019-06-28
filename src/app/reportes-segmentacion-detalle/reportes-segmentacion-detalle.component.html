@@ -1,14 +1,50 @@
-<p>
-  reportes-segmentacion-detalle works!
-</p>
-<h1 mat-dialog-title>Hi </h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput >
-  </mat-form-field>
+
+<div fxLayout="row"  fxLayout.xs="column" fxLayoutWrap fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+
+
+  <div fxFlex="30">
+
+<mat-label>Escoga nivel:</mat-label>
+<mat-select  (selectionChange)="selectedAmbito($event)">
+  <mat-option *ngFor="let ambito of itemsAmbitos" [value]="ambito.value">
+    {{ambito.label}}
+  </mat-option>
+</mat-select>
+
+<mat-table  [dataSource]="data" class="example-table">
+  <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns">
+    <mat-header-cell *matHeaderCellDef > {{column.label}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+  </ng-container>
+  <mat-header-row  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+  <mat-row     (click)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>
+  </div>
+
+  <div fxFlex="70">
+
+    <object
+      [data]="urlCroquis"
+      type="application/pdf"
+      width="100%"
+      height="100%">
+      alt:  <a [href]="urlCroquis">Download the PDF</a>
+    </object>
+
+  </div>
+
+
 </div>
-<div mat-dialog-actions>
-  <button mat-button >No Thanks</button>
-  <button mat-button cdkFocusInitial>Ok</button>
+
+<div class="container"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center center"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0">
+
+  <div fxFlex="100" [ngStyle]="{'text-align':'center'}">
+    <button mat-button  color="warn" (click)="onClose()"  >Cerrar</button>
+  </div>
+
 </div>

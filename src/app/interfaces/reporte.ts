@@ -8,6 +8,7 @@ export class ReporteAvanceSegmentacion {
 
 }
 export class ReporteCroquisListado {
-  _id: object;
-  cant_viv: number;
+  data: any[];
+  displayedColumns: any[];
+  columnsToDisplay:any[];
 }

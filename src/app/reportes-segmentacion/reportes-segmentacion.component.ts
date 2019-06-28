@@ -42,7 +42,7 @@ export class ReportesSegmentacionComponent implements OnInit {
       let ambito = this.ambito + 1;
       this.parametrosService.cambiarParametros({ambito: ambito, codigo: row.codigo, text: row.descripcion});
     } else {
-      this.openDialog();
+      this.openDialog(row);
     }
   }
 
@@ -51,15 +51,26 @@ export class ReportesSegmentacionComponent implements OnInit {
     this.parametrosService.cambiarParametros({ambito: ambito, codigo: row.codigo, text: row.text});
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ReportesSegmentacionDetalleComponent, {
-      width: '90%',
-      //data: {name: this.name, animal: this.animal}
-    });
+  openDialog(row): void {
+    //getDataReporteCroquisListado
+
 
     /*dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.animal = result;
+    });*/
+
+    this.parametrosService.cambiarParametrosCroquisListado({ambito:0,codigo:row.codigo});
+
+    const dialogRef = this.dialog.open(ReportesSegmentacionDetalleComponent, {
+      width: '90%',
+      data: {idzona:row.codigo}
+    });
+
+    /*this.reporteService.getDataReporteCroquisListado(0,row.codigo).subscribe(data=>{
+      const dialogRef = this.dialog.open(ReportesSegmentacionDetalleComponent, {
+        width: '90%',
+      });
     });*/
   }
 
@@ -68,7 +79,6 @@ export class ReportesSegmentacionComponent implements OnInit {
     this.reporteService.getLoadedDataSource().subscribe(res => {
         this.ambito = this.parametrosService.params.ambito;
         this.itemsUbigeos = this.parametrosService.getItemsUbigeos();
-
         this.data = res;
       }
     );
