@@ -1,0 +1,41 @@
+
+
+<mat-card >
+  <mat-card-header>
+  <mat-card-title>
+    <h2>LISTA DE USUARIOS</h2>
+  </mat-card-title>
+  </mat-card-header>
+
+
+  <mat-card-content>
+    <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
+      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="update">
+        <mat-header-cell *matHeaderCellDef> ACTUALIZAR </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="action-link">
+          <button mat-button color="primary" >  <a routerLink="detalle/{{ element._id }}"><mat-icon>update</mat-icon></a></button>
+
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef> ELIMINAR </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="action-link">
+          <button mat-button color="warn" > <mat-icon>delete</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+      <mat-row class="example-row" (dblclick)="selectUsuario(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+    </mat-table>
+
+  </mat-card-content>
+
+</mat-card>

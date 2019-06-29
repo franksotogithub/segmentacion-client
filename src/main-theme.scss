@@ -12,6 +12,13 @@ $warn:    mat-palette($mat-red);
 $primary-color:#3F51B5;
 
 $theme: mat-light-theme($primary, $accent,$warn);
-
+$primary-color-dark:   #1976D2;
+$primary-color:        #2196F3;
+$primary-color-light:  #BBDEFB;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FF5722;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
 
 @include angular-material-theme($theme);

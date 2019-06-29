@@ -15,7 +15,9 @@ import {ErrorInterceptor } from './helpers/error.interceptor';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuComponent } from './menu/menu.component';
 import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-detalle/reportes-segmentacion-detalle.component';
-
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.component';
+//import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,9 @@ import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-de
     ReportesSegmentacionComponent,
     EsriMapComponent,
     MenuComponent,
-    ReportesSegmentacionDetalleComponent
+    ReportesSegmentacionDetalleComponent,
+    UsuariosComponent,
+    UsuariosDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-de
     AppRoutingModule,
     HttpClientModule,
     FlexLayoutModule,
+    //MatTableDataSource,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

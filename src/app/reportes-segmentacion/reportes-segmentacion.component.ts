@@ -1,20 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ReporteService} from '../services/reporte.service';
 import {ParametrosService} from '../services/parametros.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ReportesSegmentacionDetalleComponent} from '../reportes-segmentacion-detalle/reportes-segmentacion-detalle.component';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
+//import {} from '@angular/material';
 @Component({
   selector: 'app-reportes-segmentacion',
   templateUrl: './reportes-segmentacion.component.html',
   styleUrls: ['./reportes-segmentacion.component.scss']
 })
 export class ReportesSegmentacionComponent implements OnInit {
-
-
-  //displayedColumns: string[] = ['codigo', 'descripcion', 'cant_zona_marco', 'cant_zona_segm', 'porcent_segm'];
-
   displayedColumns: any[] = [
     {data: 'codigo', label: 'CODIGO'},
     {data: 'descripcion', label: 'DESCRIPCION'},
@@ -24,19 +23,21 @@ export class ReportesSegmentacionComponent implements OnInit {
   ];
 
   columnsToDisplay: string[] = this.displayedColumns.map(x => {
-    return x.data
+    return x.data;
   });
-  //columnsToDisplay: string[] = this.displayedColumns.slice();
-  data: any[];
+
+  dataSource = new MatTableDataSource([]);
   ambito: number = 0;
   itemsUbigeos: any[] = [{'ambito': -1, 'text': 'PERU', codigo: '00'}];
-
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private reporteService: ReporteService, private parametrosService: ParametrosService, public dialog: MatDialog) {
-    //window.location.reload();
   }
 
-
+  applyFilter(event) {
+    let filterValue=event.target.value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   selectUbigeo(row, event) {
     if (this.ambito < 3) {
       let ambito = this.ambito + 1;
@@ -52,26 +53,15 @@ export class ReportesSegmentacionComponent implements OnInit {
   }
 
   openDialog(row): void {
-    //getDataReporteCroquisListado
 
-
-    /*dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });*/
-
-    this.parametrosService.cambiarParametrosCroquisListado({ambito:0,codigo:row.codigo});
+    this.parametrosService.cambiarParametrosCroquisListado({ambito: 0, codigo: row.codigo});
 
     const dialogRef = this.dialog.open(ReportesSegmentacionDetalleComponent, {
       width: '90%',
-      data: {idzona:row.codigo}
+      data: {idzona: row.codigo}
     });
 
-    /*this.reporteService.getDataReporteCroquisListado(0,row.codigo).subscribe(data=>{
-      const dialogRef = this.dialog.open(ReportesSegmentacionDetalleComponent, {
-        width: '90%',
-      });
-    });*/
+
   }
 
   ngOnInit() {
@@ -79,7 +69,8 @@ export class ReportesSegmentacionComponent implements OnInit {
     this.reporteService.getLoadedDataSource().subscribe(res => {
         this.ambito = this.parametrosService.params.ambito;
         this.itemsUbigeos = this.parametrosService.getItemsUbigeos();
-        this.data = res;
+        this.dataSource.data = res;
+        this.dataSource.sort = this.sort;
       }
     );
 

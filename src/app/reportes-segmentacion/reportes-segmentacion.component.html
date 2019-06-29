@@ -11,27 +11,32 @@
 
 
   <div fxFlex="50%" class="">
-  <div >
-    <div class="contenedor-itemUbigeos">
-      <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
-        {{itemUbigeo.text}}
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center center">
+      <div class="contenedor-itemUbigeos" fxFlex="50">
+        <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
+          {{itemUbigeo.text}}
+        </div>
+      </div>
+      <div fxFlex="50">        <mat-form-field>
+
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscador">
+        </mat-form-field>
       </div>
     </div>
 
     <div class="example-table-container">
-    <table mat-table  [dataSource]="data" class="example-table mat-elevation-z8">
-      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns">
-        <th mat-header-cell *matHeaderCellDef > {{column.label}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column.data]}} </td>
+    <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
+      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
       </ng-container>
 
 
 
-      <tr mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
-      <tr mat-row class="example-row" (dblclick)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></tr>
-    </table>
+      <mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+      <mat-row class="example-row" (dblclick)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+    </mat-table>
     </div>
   </div>
 
-  </div>
 </div>

@@ -3,14 +3,14 @@
 
 
   <div fxFlex="30">
-
+    <mat-form-field>
 <mat-label>Escoga nivel:</mat-label>
 <mat-select  (selectionChange)="selectedAmbito($event)">
   <mat-option *ngFor="let ambito of itemsAmbitos" [value]="ambito.value">
     {{ambito.label}}
   </mat-option>
 </mat-select>
-
+    </mat-form-field>
 <mat-table  [dataSource]="data" class="example-table">
   <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns">
     <mat-header-cell *matHeaderCellDef > {{column.label}} </mat-header-cell>
@@ -44,7 +44,8 @@
      fxLayoutGap.xs="0">
 
   <div fxFlex="100" [ngStyle]="{'text-align':'center'}">
-    <button mat-button  color="warn" (click)="onClose()"  >Cerrar</button>
+    <button mat-button  mat-dialog-close color="warn"   >Cerrar</button>
+
   </div>
 
 </div>

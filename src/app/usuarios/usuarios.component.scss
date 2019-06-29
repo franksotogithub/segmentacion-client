@@ -1,0 +1,26 @@
+@import '../../main-theme';
+
+
+.mat-header-row{
+  background-color: mat-color($primary);
+}
+
+.mat-header-cell{
+  color: $primary-color-text;
+}
+/*
+.mat-row:hover{
+  background : mat-color($primary,300) ;
+}*/
+
+
+::ng-deep .mat-sort-header-arrow{
+  color : $primary-color-text;
+}
+
+.mat-card{
+
+  //  max-width: 300px;
+    margin: 4px
+
+}
