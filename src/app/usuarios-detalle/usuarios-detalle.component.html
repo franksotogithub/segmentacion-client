@@ -1,38 +1,51 @@
 <mat-card class="my-card">
-  <mat-card-title><h2>REGISTRO</h2></mat-card-title>
+  <mat-card-title><h2>{{action}} Usuario</h2></mat-card-title>
 
   <mat-card-content>
 
     <!--<div fxLayout="row"  fxLayout.xs="column" fxLayoutWrap fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">-->
-    <form class="my-form" fxLayout="column" >
+    <div class="my-form" fxLayout="column"  >
 
       <mat-form-field class="full-width">
         <mat-label>Usuario</mat-label>
-        <input  matInput  placeholder="First name"  name="fname"  required>
+        <input  matInput  placeholder="Usuario"  name="usuario" [(ngModel)]="usuario.username"  required> 
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Nombres</mat-label>
-        <input  matInput  placeholder="First name"  name="fname"  >
+        <input  matInput  placeholder="Nombres"  name="nombres" [(ngModel)]="usuario.nombres"  >
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Apellidos</mat-label>
-        <input  matInput  placeholder="Last Name" name="lname"  >
+        <input  matInput  placeholder="Apellidos" name="apellidos"  [(ngModel)]="usuario.apellidos" >
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input  matInput  placeholder="Address" name="address"  required>
+        <input  matInput  placeholder="Email" name="email"  [(ngModel)]="usuario.email" required>
       </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <mat-label>Password</mat-label>
-        <input  matInput  type="password" placeholder="Password"  name="password" required>
-      </mat-form-field>
 
-    </form>
+
+      <div *ngIf ="action =='Registrar'; else elseBlock ">
+          <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input  matInput  type="password" placeholder="Password"   name="password"  [(ngModel)]="usuario.password" required>
+          </mat-form-field>
+        
+      </div>
+      
+      <ng-template #elseBlock>
+          <div mat-form-field>
+              <mat-label>Password: </mat-label>
+              <button mat-raised-button color="accent">CAMBIAR PASSWORD</button>          
+          </div>
+      </ng-template>
+
+    </div>
   </mat-card-content>
-  <mat-card-actions>
-    <!--REGISTER BUTTON HERE-->
-  </mat-card-actions>
+    
+  <button mat-raised-button   (click)="submit()" color="primary">GUARDAR</button>
+  <div *ngIf="message" color="warn">{{message}}</div>
+
 </mat-card>

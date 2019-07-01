@@ -17,6 +17,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-detalle/reportes-segmentacion-detalle.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.component';
+import { UsuarioDialogBoxComponent } from './usuario-dialog-box/usuario-dialog-box.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.co
     MenuComponent,
     ReportesSegmentacionDetalleComponent,
     UsuariosComponent,
-    UsuariosDetalleComponent
+    UsuariosDetalleComponent,
+    UsuarioDialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,7 @@ import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.co
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
   ],
-  entryComponents: [ ReportesSegmentacionDetalleComponent],
+  entryComponents: [ ReportesSegmentacionDetalleComponent,UsuarioDialogBoxComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

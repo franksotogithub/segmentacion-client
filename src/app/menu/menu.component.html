@@ -8,7 +8,7 @@
 
       <span class="spacer"></span>
       <!--<a mat-button routerLink="/login">Register</a>-->
-      <a mat-button routerLink="/login">Login</a>
+      <a mat-button routerLink="/login" >Login</a>
       <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -22,9 +22,9 @@
 
 
       </mat-nav-list>-->
-      <mat-list role="list">
-        <mat-list-item role="listitem"><a mat-button routerLink="/reportes">Reporte Croquis y Listado</a></mat-list-item>
-        <mat-list-item role="listitem"><a mat-button routerLink="/usuarios">Administrar Usuarios</a></mat-list-item>
+      <mat-list>
+        <mat-list-item (click)="select(menu)"   [class.menu-select]="menu===menuSelect"  *ngFor="let menu of menuItems" routerLink="{{menu.routerLink}}" [ngStyle]="{ cursor:'pointer'}"><mat-icon >{{menu.icon}}</mat-icon> {{menu.name}}</mat-list-item>
+        <!--<a mat-list-item  routerLinkActive="list-item-active"  routerLink="/usuarios"><mat-icon>account_box</mat-icon>Administrar Usuarios</a>-->
       </mat-list>
       <!--<a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>-->
     </mat-sidenav>

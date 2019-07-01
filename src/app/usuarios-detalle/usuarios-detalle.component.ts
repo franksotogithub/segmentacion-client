@@ -10,7 +10,10 @@ import {Usuario} from "../interfaces/usuario";
   styleUrls: ['./usuarios-detalle.component.scss']
 })
 export class UsuariosDetalleComponent implements OnInit {
-  private  usuario: Usuario;
+  private  usuario: Usuario ={ nombres:'',username:'',apellidos:'',id:'',email:'',password:''};
+  //private  usuario: Usuario ;
+  private action='Registrar';
+  private message: String='';
   constructor(private route: ActivatedRoute, private  usuarioService: UsuarioService) {
   }
 
@@ -20,11 +23,32 @@ export class UsuariosDetalleComponent implements OnInit {
     });
   }
 
+  updateUsuario(){
+    let id = this.route.snapshot.paramMap.get('id');
+    this.usuarioService.updateUsuario(id,this.usuario).subscribe(res=>{
+      this.message=res.message;
+    });
+  }
+
+  addUsuario(){
+    this.usuarioService.addUsuario(this.usuario).subscribe(res=>{
+      this.message=res.message;
+    });
+  }
+
+  submit(){
+    (this.action=='Registrar')?this.addUsuario():this.updateUsuario();
+    
+  }
+
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     if(id){
+      this.action='Actualizar';
       this.getUsuario(id);
     }
+
+    else{this.action='Registrar';}
   }
 
 }

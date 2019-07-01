@@ -9,6 +9,10 @@
 
 
   <mat-card-content>
+
+    <div [ngStyle]="{'text-align':'right'}">
+        <button  mat-button color="accent"> <a routerLink="crear">Crear<mat-icon> create </mat-icon> </a></button>
+    </div>
     <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
       <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
         <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
@@ -28,7 +32,7 @@
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef> ELIMINAR </mat-header-cell>
         <mat-cell *matCellDef="let element" class="action-link">
-          <button mat-button color="warn" > <mat-icon>delete</mat-icon></button>
+          <button mat-button color="warn" (click)='openDialog("delete",element)' > <mat-icon>delete</mat-icon></button>
         </mat-cell>
       </ng-container>
 

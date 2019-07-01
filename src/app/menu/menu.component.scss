@@ -37,3 +37,37 @@ h1.example-app-name {
   flex: 1 0 auto;
 }
 
+/*mat-list-option {
+  background: rgba(0, 139, 139, 0.7);
+}*/
+/*
+mat-sidenav{
+ 
+}*/
+
+.mat-nav-list .mat-list-item {
+  /*background: mat-color($primary,500);*/
+  //color: $primary-color-text;
+}
+.mat-sidenav {
+  //background: mat-color($primary,300);
+  //color: $primary-color-text;
+}
+
+.mat-nav-list .mat-list-item:hover{
+  background: mat-color($accent,100);
+  color: $primary-color-text;
+  
+}
+
+/*
+.active-list-item {
+  background: mat-color($accent,300);
+  color: $primary-color-text
+}*/
+
+.menu-select {
+  font-weight: bold;
+  color: mat-color($accent, darker) !important;
+  background: rgba(0, 0, 0, 0.04);
+}

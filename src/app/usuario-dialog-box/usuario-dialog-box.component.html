@@ -1,0 +1,10 @@
+<h1 mat-dialog-title> {{actionItemSelect.actionTitle}}</h1>
+<div mat-dialog-contet>
+  <p> {{actionItemSelect.actionMessage}}</p>
+</div>
+
+<div mat-dialod-actions>
+  <button mat-button (click)="doAction()">{{actionItemSelect.actionLabelButton}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancelar</button>
+</div>
+

@@ -11,32 +11,43 @@
 
 
   <div fxFlex="50%" class="">
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center center">
-      <div class="contenedor-itemUbigeos" fxFlex="50">
-        <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
-          {{itemUbigeo.text}}
-        </div>
-      </div>
-      <div fxFlex="50">        <mat-form-field>
+    <mat-tab-group>
+      <mat-tab label="Reportes">
 
-          <input matInput (keyup)="applyFilter($event)" placeholder="Buscador">
-        </mat-form-field>
-      </div>
-    </div>
+          <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
+              <div class="contenedor-itemUbigeos" fxFlex="65">
+                <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
+                  {{itemUbigeo.text}}
+                </div>
+              </div>
+              <div fxFlex="35">  
+                <mat-form-field>
+        
+                  <input matInput (keyup)="applyFilter($event)" placeholder="Buscador">
+                </mat-form-field>
+              </div>
+          </div>
+        
+            <div class="example-table-container">
+            <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
+              <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+              </ng-container>
+        
+        
+        
+              <mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+              <mat-row class="example-row" (dblclick)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+            </mat-table>
+            </div>
 
-    <div class="example-table-container">
-    <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
-      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
-        <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
-      </ng-container>
+      </mat-tab>
+      <mat-tab label="Estadisticas"></mat-tab>
+      <mat-tab label="Graficos"></mat-tab>
+    </mat-tab-group>
 
 
-
-      <mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
-      <mat-row class="example-row" (dblclick)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
-    </mat-table>
-    </div>
   </div>
 
 </div>
