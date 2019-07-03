@@ -1,15 +1,26 @@
 
 @import '../../main-theme';
 
+.mat-card{
 
-.example-table-container {
-  position: relative;
-  height: 590px;
-  overflow: auto;
+  //  max-width: 300px;
+  margin: 10px
+
 }
 
-table {
+.example-table-container {
+  //position: relative;
+  /*height: 590px;*/
+  /*min-height : 100% !important;*/
+  //overflow: auto;
+}
+
+.mat-table {
+
+  height: calc( 100vh - 270px);
+  overflow: auto;
   width: 100%;
+  /*width: 100%;*/
 }
 .mat-header-row{
   background-color: mat-color($primary);
