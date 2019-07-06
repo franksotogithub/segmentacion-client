@@ -128,11 +128,10 @@ export class ReporteService {
     }
     */
     url = `${this.apiEndPointData}reportes/reporte_avance_segm/${parametros.ambito}/${parametros.codigo}`;
-    return this.http.get<ReporteAvanceSegmentacion[]>(url).pipe(
+    return this.http.get<any>(url).pipe(
       tap(response => {
-
         this.loadedDataSource.next(response);
-        this.loadedDataMapaSource.next(this.formatDataMapa(response));
+        this.loadedDataMapaSource.next(this.formatDataMapa(response.reporte));
       }),
       catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getIndicadorData `))
     );

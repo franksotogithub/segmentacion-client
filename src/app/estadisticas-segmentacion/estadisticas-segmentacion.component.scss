@@ -1,0 +1,23 @@
+//.mat-table {
+ // width: 100%;
+  //height: 450px;
+  //overflow-y: auto;
+//}
+.example-table-container{
+  height: calc( 100vh - 200px);
+}
+
+.mat-table {
+
+  //height: calc( 100vh - 200px);
+  overflow: auto;
+  width: 100%;
+}
+
+/*
+.mat-table tbody{
+
+  max-height: 100px!important;
+  overflow-y: scroll;
+
+}*/

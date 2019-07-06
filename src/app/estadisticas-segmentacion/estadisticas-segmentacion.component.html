@@ -1,0 +1,46 @@
+<div class="example-table-container">
+  <table class="mat-table">
+    <tr class="mat-header-row">
+      <th  class="mat-header-cell">
+        NUMERO DE VIVIENDAS POR AREA DE EMPADRONAMIENTO
+      </th>
+      <th class="mat-header-cell">
+        ABS
+      </th>
+      <th class="mat-header-cell">
+        %
+      </th>
+
+    </tr>
+
+
+
+
+    <tr  class="mat-row" *ngFor="let element of dataSource1" >
+      <td class="mat-cell" *ngFor="let column of columnsToDisplay1" >
+
+        <div *ngIf="column=='porcent'; then thenBlock else elseBlock"></div>
+
+        <ng-template #thenBlock>
+          {{element[column] | number:'1.2-2'}}
+        </ng-template>
+
+        <ng-template #elseBlock>
+          {{element[column]}}
+        </ng-template>
+
+      </td>
+    </tr>
+
+
+    <tr class="mat-header-row">
+      <th colspan="2" class="mat-header-cell">
+        NUMERO DE VIVIENDAS POR AREA DE EMPADRONAMIENTO
+      </th>
+      <th class="mat-header-cell">
+        ABS
+      </th>
+    </tr>
+
+  </table>
+</div>

@@ -18,6 +18,7 @@ import { ReportesSegmentacionDetalleComponent } from './reportes-segmentacion-de
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.component';
 import { UsuarioDialogBoxComponent } from './usuario-dialog-box/usuario-dialog-box.component';
+import { EstadisticasSegmentacionComponent } from './estadisticas-segmentacion/estadisticas-segmentacion.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UsuarioDialogBoxComponent } from './usuario-dialog-box/usuario-dialog-b
     ReportesSegmentacionDetalleComponent,
     UsuariosComponent,
     UsuariosDetalleComponent,
-    UsuarioDialogBoxComponent
+    UsuarioDialogBoxComponent,
+    EstadisticasSegmentacionComponent
   ],
   imports: [
     BrowserModule,

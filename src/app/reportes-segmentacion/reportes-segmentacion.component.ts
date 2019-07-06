@@ -69,7 +69,7 @@ export class ReportesSegmentacionComponent implements OnInit {
     this.reporteService.getLoadedDataSource().subscribe(res => {
         this.ambito = this.parametrosService.params.ambito;
         this.itemsUbigeos = this.parametrosService.getItemsUbigeos();
-        this.dataSource.data = res;
+        this.dataSource.data = res.reporte;
         this.dataSource.sort = this.sort;
       }
     );
