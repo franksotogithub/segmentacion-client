@@ -19,6 +19,10 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosDetalleComponent } from './usuarios-detalle/usuarios-detalle.component';
 import { UsuarioDialogBoxComponent } from './usuario-dialog-box/usuario-dialog-box.component';
 import { EstadisticasSegmentacionComponent } from './estadisticas-segmentacion/estadisticas-segmentacion.component';
+import { GraficosComponent } from './graficos/graficos.component';
+import { ChartModule, HIGHCHARTS_MODULES  } from 'angular-highcharts';
+import * as more from 'highcharts/highcharts-more.src';
+import * as exporting from 'highcharts/modules/exporting.src';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { EstadisticasSegmentacionComponent } from './estadisticas-segmentacion/e
     UsuariosComponent,
     UsuariosDetalleComponent,
     UsuarioDialogBoxComponent,
-    EstadisticasSegmentacionComponent
+    EstadisticasSegmentacionComponent,
+    GraficosComponent
   ],
   imports: [
     BrowserModule,
@@ -41,12 +46,13 @@ import { EstadisticasSegmentacionComponent } from './estadisticas-segmentacion/e
     AppRoutingModule,
     HttpClientModule,
     FlexLayoutModule,
+    ChartModule,
     //MatTableDataSource,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] } 
   ],
   entryComponents: [ ReportesSegmentacionDetalleComponent,UsuarioDialogBoxComponent],
   bootstrap: [AppComponent]

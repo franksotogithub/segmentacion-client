@@ -12,6 +12,8 @@ import {ParametrosService} from '../services/parametros.service';
 export class EsriMapComponent implements OnInit {
   @ViewChild('mapViewNode', {static: false})
   private mapViewEl: ElementRef;
+
+  
   private zoom = 6;
   private center: Array<number> = [-75, -9.305];
   private basemap = 'streets';
