@@ -15,16 +15,23 @@
 
 
       <div fxFlex="50%" class="">
-        <mat-tab-group>
 
-          <mat-tab label="Reportes">
-
-            <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
-              <div class="contenedor-itemUbigeos" fxFlex="65">
+<!--
+      <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
+      
+      -->
+      <div fxLayout="column">
+          <div class="contenedor-itemUbigeos"  >
                 <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
                   {{itemUbigeo.text}}
                 </div>
-              </div>
+          </div>
+        <mat-tab-group >
+
+          <mat-tab label="Reportes" >
+
+            <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
+
               <div fxFlex="35">
                 <mat-form-field>
 
@@ -81,6 +88,11 @@
         </mat-tab-group>
 
 
+        </div>
+    <!--
+    
+    </div>
+-->
       </div>
 
     </div>
