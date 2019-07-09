@@ -297,7 +297,7 @@ export class EsriMapComponent implements OnInit {
       );
 
 
-      //this.map.on()
+
 
     });
 

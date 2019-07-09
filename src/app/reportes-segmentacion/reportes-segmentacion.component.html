@@ -5,8 +5,10 @@
 
       <div fxFlex="50%">
         <div >
-          <app-esri-map>
 
+          <app-esri-map-leyenda>
+          </app-esri-map-leyenda>
+          <app-esri-map>
           </app-esri-map>
         </div>
       </div>
@@ -14,9 +16,7 @@
 
       <div fxFlex="50%" class="">
         <mat-tab-group>
-              <mat-tab label="Graficos">
-           <app-graficos></app-graficos>
-          </mat-tab>
+
           <mat-tab label="Reportes">
 
             <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
@@ -37,7 +37,28 @@
               <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
                 <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
                   <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+                 <!-- <div *ngIf="column=='porcent'; then thenBlock else elseBlock"></div>
+                  <mat-cell *matCellDef="let element">
+
+                    <ng-template #thenBlock>-->
+
+                    <!--</ng-template>-->
+
+                    <!--<ng-template #elseBlock>
+                    {{element[column.data]}}
+                    </ng-template>-->
+
+                  <mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="column.data=='porcent_segm'">
+                      {{element[column.data] | number:'1.2-2'}}
+                    </ng-container>
+                    <ng-container *ngIf="column.data!=='porcent_segm'">
+                      {{element[column.data]}}
+                    </ng-container>
+
+                  </mat-cell>
+
+                  <!--{{element[column.data]}} </mat-cell>-->
                 </ng-container>
 
 
@@ -54,7 +75,9 @@
             </app-estadisticas-segmentacion>
 
           </mat-tab>
-    
+          <mat-tab label="Graficos">
+            <app-graficos></app-graficos>
+          </mat-tab>
         </mat-tab-group>
 
 

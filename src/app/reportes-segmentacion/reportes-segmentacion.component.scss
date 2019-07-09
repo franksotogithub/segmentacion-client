@@ -20,7 +20,7 @@
   height: calc( 100vh - 270px);
   overflow: auto;
   width: 100%;
-  /*width: 100%;*/
+
 }
 .mat-header-row{
   background-color: mat-color($primary);
@@ -32,6 +32,7 @@
 
 .mat-row:hover{
   background : mat-color($primary,300) ;
+  cursor: pointer;
 }
 
 

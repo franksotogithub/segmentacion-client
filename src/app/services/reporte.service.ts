@@ -25,11 +25,11 @@ export class ReporteService {
   paramsSource$ = this.paramsSource.asObservable();
 
   private rangos = [
-    {'min_valor': 0, 'max_valor': 20},
-    {'min_valor': 20, 'max_valor': 40},
-    {'min_valor': 40, 'max_valor': 60},
-    {'min_valor': 60, 'max_valor': 80},
-    {'min_valor': 80, 'max_valor': 100},
+    {id: 4, 'min_valor': 80, 'max_valor': 100},
+    {id: 3, 'min_valor': 60, 'max_valor': 80},
+    {id: 2, 'min_valor': 40, 'max_valor': 60},
+    {id: 1, 'min_valor': 20, 'max_valor': 40},
+    {id: 0, 'min_valor': 0, 'max_valor': 20},
   ];
   private colores = [
 
@@ -73,6 +73,8 @@ export class ReporteService {
       return {'codigo': x.codigo, 'valor': x.porcent_segm, 'text': x.descripcion};
     });
     res['data'] = this.getColorPorDato(datos, this.rangos, this.colores);
+    res['colores'] = this.colores;
+    res['rangos'] = this.rangos;
     res['ambito'] = this.parametros.ambito;
     return res;
   }
@@ -91,7 +93,7 @@ export class ReporteService {
       if (!(valor == null || valor == undefined)) {
         for (j = 0; j < rangos.length; j++) {
           if (rangos[j].min_valor <= valor && rangos[j].max_valor >= valor) {
-            color = colores.find(x => x.id === j).color;
+            color = colores.find(x => x.id === rangos[j].id).color;
             el['estrato'] = j;
             el['color'] = color;
           }

@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-usuario-dialog-box',
   templateUrl: './usuario-dialog-box.component.html',
-  styleUrls: ['./usuario-dialog-box.component.css']
+  styleUrls: ['./usuario-dialog-box.component.scss']
 })
 export class UsuarioDialogBoxComponent implements OnInit {
   action:String;

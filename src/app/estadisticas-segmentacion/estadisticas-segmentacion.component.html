@@ -1,19 +1,38 @@
 <div class="example-table-container">
   <table class="mat-table">
+
     <tr class="mat-header-row">
-      <th  class="mat-header-cell">
-        NUMERO DE VIVIENDAS POR AREA DE EMPADRONAMIENTO
+      <th colspan="2" class="mat-header-cell">
+        Resultados de la segmentacion
       </th>
       <th class="mat-header-cell">
-        ABS
+        Abs.
       </th>
-      <th class="mat-header-cell">
-        %
-      </th>
+    </tr>
+
+    <tr  class="mat-row" *ngFor="let element of dataSource3" >
+      <td class="mat-cell"  colspan="2" >
+        {{element['label']}}
+      </td>
+
+      <td class="mat-cell"   >
+        {{element['valor']}}
+      </td>
 
     </tr>
 
 
+    <tr class="mat-header-row">
+      <th  class="mat-header-cell">
+        Numero de viviendas por Area de Empadronamiento
+      </th>
+      <th class="mat-header-cell">
+        Abs.
+      </th>
+      <th class="mat-header-cell">
+        %
+      </th>
+    </tr>
 
 
     <tr  class="mat-row" *ngFor="let element of dataSource1" >
@@ -35,12 +54,26 @@
 
     <tr class="mat-header-row">
       <th colspan="2" class="mat-header-cell">
-        NUMERO DE VIVIENDAS POR AREA DE EMPADRONAMIENTO
+        Promedio de Manzanas, viviendas y personas por area de empadronamiento
       </th>
       <th class="mat-header-cell">
-        ABS
+        Abs.
       </th>
     </tr>
+
+    <tr  class="mat-row" *ngFor="let element of dataSource2" >
+      <td class="mat-cell"  colspan="2" >
+        {{element['label']}}
+      </td>
+
+      <td class="mat-cell"   >
+        {{element['valor']| number:'1.2-2'}}
+      </td>
+
+    </tr>
+
+
+
 
   </table>
 </div>

@@ -1,8 +1,4 @@
-//.mat-table {
- // width: 100%;
-  //height: 450px;
-  //overflow-y: auto;
-//}
+@import '../../main-theme';
 .example-table-container{
   height: calc( 100vh - 200px);
 }
@@ -14,10 +10,10 @@
   width: 100%;
 }
 
-/*
-.mat-table tbody{
+.mat-header-row{
+  background-color: mat-color($primary);
+}
 
-  max-height: 100px!important;
-  overflow-y: scroll;
-
-}*/
+.mat-header-cell{
+  color: $primary-color-text;
+}

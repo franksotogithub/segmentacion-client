@@ -23,6 +23,7 @@ import { GraficosComponent } from './graficos/graficos.component';
 import { ChartModule, HIGHCHARTS_MODULES  } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
+import { EsriMapLeyendaComponent } from './esri-map-leyenda/esri-map-leyenda.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import * as exporting from 'highcharts/modules/exporting.src';
     UsuariosDetalleComponent,
     UsuarioDialogBoxComponent,
     EstadisticasSegmentacionComponent,
-    GraficosComponent
+    GraficosComponent,
+    EsriMapLeyendaComponent
   ],
   imports: [
     BrowserModule,

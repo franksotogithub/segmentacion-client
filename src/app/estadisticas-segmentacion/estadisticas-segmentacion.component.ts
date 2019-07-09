@@ -11,6 +11,7 @@ import {ParametrosService} from "../services/parametros.service";
 export class EstadisticasSegmentacionComponent implements OnInit {
   dataSource1 = [];
   dataSource2 = [];
+  dataSource3 =[];
 
   displayedColumns1: any[] = [
     {data: 'label', label: 'NUMERO DE VIVIENDAS POR AREA DE EMPADRONAMIENTO'},
@@ -24,6 +25,16 @@ export class EstadisticasSegmentacionComponent implements OnInit {
     return x.data;
   });
 
+  displayedColumns2: any[] = [
+    {data: 'label', label: 'Promedio de Manzanas, viviendas y personas por area de empadronamiento'},
+    {data: 'valor', label: 'Abs.'},
+
+  ];
+
+  columnsToDisplay2: string[] = this.displayedColumns1.map(x => {
+    return x.data;
+  });
+
 
   constructor(private reporteService: ReporteService, private parametrosService: ParametrosService) {
   }
@@ -32,6 +43,8 @@ export class EstadisticasSegmentacionComponent implements OnInit {
     this.reporteService.getLoadedDataSource().subscribe(res => {
         this.dataSource1 = res.estadisticas.viviendas;
         this.dataSource2 = res.estadisticas.promedios;
+        this.dataSource3 = res.estadisticas.informativa;
+
       }
     );
 
