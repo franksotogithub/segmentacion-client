@@ -24,6 +24,8 @@ import { ChartModule, HIGHCHARTS_MODULES  } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import { EsriMapLeyendaComponent } from './esri-map-leyenda/esri-map-leyenda.component';
+import { CalidadSegmentacionComponent } from './calidad-segmentacion/calidad-segmentacion.component';
+import { CalidadSegmentacionDetalleComponent } from './calidad-segmentacion-detalle/calidad-segmentacion-detalle.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { EsriMapLeyendaComponent } from './esri-map-leyenda/esri-map-leyenda.com
     UsuarioDialogBoxComponent,
     EstadisticasSegmentacionComponent,
     GraficosComponent,
-    EsriMapLeyendaComponent
+    EsriMapLeyendaComponent,
+    CalidadSegmentacionComponent,
+    CalidadSegmentacionDetalleComponent
   ],
   imports: [
     BrowserModule,
