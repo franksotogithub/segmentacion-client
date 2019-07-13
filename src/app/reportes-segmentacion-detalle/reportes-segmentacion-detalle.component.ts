@@ -24,7 +24,7 @@ export class ReportesSegmentacionDetalleComponent implements OnInit {
     {value: 2, label: 'empadronador'},
   ];
 
-  private selectedItemAmbito = this.itemsAmbitos[0];
+
   private data;
   private idzona;
 
@@ -63,9 +63,6 @@ export class ReportesSegmentacionDetalleComponent implements OnInit {
         }
       }
 
-
-        /*
-        */
       }
     );
   }

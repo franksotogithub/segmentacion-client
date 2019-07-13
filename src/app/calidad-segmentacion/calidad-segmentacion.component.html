@@ -1,3 +1,36 @@
-<p>
-  calidad-segmentacion works!
-</p>
+<mat-card class="my-card">
+
+  <mat-card-content>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+
+        <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
+          <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
+            <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
+
+
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="column.data=='porcent_avanc'">
+                {{element[column.data] | number:'1.2-2'}}
+              </ng-container>
+              <ng-container *ngIf="column.data!=='porcent_avanc'">
+                {{element[column.data]}}
+              </ng-container>
+
+            </mat-cell>
+
+
+          </ng-container>
+
+
+
+          <mat-header-row color="primary"  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+          <mat-row class="example-row" (dblclick)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+        </mat-table>
+
+
+
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

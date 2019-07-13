@@ -121,14 +121,6 @@ export class ReporteService {
   getDataAvanceSegmentacion(parametros): Observable<any> {
     let url = '';
 
-    /*
-    if(parametros.codigo!=='00' && parametros.codigo!==undefined){
-      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}/${parametros.codigo}`;
-    }
-    else{
-      url = `${this.apiEndPointData}croquis_listado_api/reportes/reporte_avance_segmentacion/${parametros.ambito}`;
-    }
-    */
     url = `${this.apiEndPointData}reportes/reporte_avance_segm/${parametros.ambito}/${parametros.codigo}`;
     return this.http.get<any>(url).pipe(
       tap(response => {

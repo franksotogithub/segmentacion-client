@@ -14,8 +14,9 @@ export class MenuComponent implements OnInit, OnDestroy {
   fillerNav = Array.from({length: 3}, (_, i) => `Nav Item ${i + 1}`);
   private menuItems=[
     {routerLink:'/reportes', name:'Reporte Croquis y Listado',icon:'list'},
+    {routerLink:'/calidad', name:'Calidad Croquis y Listado',icon:'check_circle'},
     {routerLink:'/usuarios', name:'Administrar Usuarios',icon:'account_box'},
-    //<a mat-list-item  routerLinkActive="list-item-active"  routerLink="/usuarios"><mat-icon>account_box</mat-icon>Administrar Usuarios</a>
+
   ]
 
   private menuSelect=this.menuItems[0];

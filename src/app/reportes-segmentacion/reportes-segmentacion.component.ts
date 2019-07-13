@@ -38,6 +38,7 @@ export class ReportesSegmentacionComponent implements OnInit {
     let filterValue=event.target.value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
   selectUbigeo(row, event) {
     if (this.ambito < 3) {
       let ambito = this.ambito + 1;
