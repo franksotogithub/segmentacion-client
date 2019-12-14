@@ -15,8 +15,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   private menuItems=[
     {routerLink:'/reportes', name:'Reporte Croquis y Listado',icon:'list'},
     {routerLink:'/calidad', name:'Calidad Croquis y Listado',icon:'check_circle'},
+    {routerLink:'/reportes_calidad', name:'Reportes Calidad',icon:'list'},
     {routerLink:'/usuarios', name:'Administrar Usuarios',icon:'account_box'},
-
   ]
 
   private menuSelect=this.menuItems[0];

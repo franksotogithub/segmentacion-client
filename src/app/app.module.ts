@@ -25,7 +25,8 @@ import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import { EsriMapLeyendaComponent } from './esri-map-leyenda/esri-map-leyenda.component';
 import { CalidadSegmentacionComponent } from './calidad-segmentacion/calidad-segmentacion.component';
-import { CalidadSegmentacionDetalleComponent } from './calidad-segmentacion-detalle/calidad-segmentacion-detalle.component';
+import { CalidadSegmentacionDetalleComponent,DialogOverviewExampleDialog } from './calidad-segmentacion-detalle/calidad-segmentacion-detalle.component';
+import { ReportesCalidadComponent } from './reportes-calidad/reportes-calidad.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { CalidadSegmentacionDetalleComponent } from './calidad-segmentacion-deta
     GraficosComponent,
     EsriMapLeyendaComponent,
     CalidadSegmentacionComponent,
-    CalidadSegmentacionDetalleComponent
+    CalidadSegmentacionDetalleComponent,
+    DialogOverviewExampleDialog,
+    ReportesCalidadComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,10 @@ import { CalidadSegmentacionDetalleComponent } from './calidad-segmentacion-deta
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] } 
   ],
-  entryComponents: [ ReportesSegmentacionDetalleComponent,UsuarioDialogBoxComponent],
+  entryComponents: [ ReportesSegmentacionDetalleComponent,
+    UsuarioDialogBoxComponent,CalidadSegmentacionDetalleComponent,
+    DialogOverviewExampleDialog
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

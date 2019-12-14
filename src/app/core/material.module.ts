@@ -3,7 +3,8 @@ import {CommonModule} from '@angular/common';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatGridListModule,
-  MatSidenavModule, MatListModule, MatSelectModule, MatSortModule,MatTabsModule
+  MatSidenavModule, MatListModule, MatSelectModule, MatSortModule,MatTabsModule,MatPaginatorModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 
@@ -25,7 +26,8 @@ import {
     MatSelectModule,
     MatSortModule,
     MatTabsModule,
-
+    MatPaginatorModule,
+    MatSlideToggleModule,
   ],
   exports: [
     CommonModule,
@@ -44,6 +46,8 @@ import {
     MatSelectModule,
     MatSortModule,
     MatTabsModule,
+    MatPaginatorModule,
+    MatSlideToggleModule,
   ],
 })
 

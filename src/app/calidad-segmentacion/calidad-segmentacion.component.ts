@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CalidadService} from '../services/calidad.service'
-//import {ReportesSegmentacionDetalleComponent} from "../reportes-segmentacion-detalle/reportes-segmentacion-detalle.component";
 import {CalidadSegmentacionDetalleComponent} from "../calidad-segmentacion-detalle/calidad-segmentacion-detalle.component";
-import {ParametrosService} from "../services/parametros.service";
 import {MatDialog, MatSort, MatTableDataSource} from "@angular/material";
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-calidad-segmentacion',
@@ -15,50 +14,81 @@ export class CalidadSegmentacionComponent implements OnInit {
   displayedColumns = [];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  itemsUbigeos=[];
+
   constructor(private calidadService: CalidadService, public dialog: MatDialog) {
   }
 
   selectUbigeo(row, event) {
     if (this.calidadService.ambito < 3) {
       this.calidadService.ambito = this.calidadService.ambito + 1;
-      this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: row.codigo}).subscribe(res=>{});
+      this.calidadService.codigo=  row.codigo;
+      this.calidadService.itemsUbigeos.push({'ambito': this.calidadService.ambito, 'codigo': row.codigo, 'text': row.descripcion});
+      this.itemsUbigeos=this.calidadService.itemsUbigeos;
+
+      this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: this.calidadService.codigo}).subscribe(res=>{});
 
     } else {
       this.openDialog(row);
     }
   }
 
+  selectItemUbigeo(row, event) {
+    let ambito = row.ambito;
+    this.calidadService.codigo=  row.codigo;
+    this.calidadService.ambito = row.ambito;
+    this.calidadService.itemsUbigeos = this.calidadService.itemsUbigeos.filter(x => x.ambito <=  this.calidadService.ambito);
+    this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: this.calidadService.codigo}).subscribe(res=>{});
+   
+  }
+
   openDialog(row): void {
 
-    this.calidadService.getDataAeuMuestraCalidad(row.codigo);
+    /*this.calidadService.getDataAeuMuestraCalidad(row.codigo);*/
 
-    const dialogRef = this.dialog.open(CalidadSegmentacionDetalleComponent, {
+    let dialogRef = this.dialog.open(CalidadSegmentacionDetalleComponent, {
       width: '90%',
       data: {idzona: row.codigo}
     });
 
+    dialogRef.afterClosed().subscribe(
+      (data) =>{
+        this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: row.codigo.substring(0,6) }).subscribe(res=>{});
+        dialogRef=null;
+      } 
+    );
+
   }
 
+  applyFilter(event) {
+    let filterValue=event.target.value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   ngOnInit() {
-
-    0
-    this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: '00'}).subscribe(res=>{});
+    this.itemsUbigeos=this.calidadService.itemsUbigeos;
+    
+    this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: this.calidadService.codigo}).subscribe(res=>{});
 
     this.calidadService.loadedDataAvanceCalidad$.subscribe(res => {
 
-
         if(res.data){
           if (res.data.length>0){
-            this.dataSource= res.data;
+            this.dataSource.data= res.data;
             this.columnsToDisplay = res.columnsToDisplay;
             this.displayedColumns = res.displayedColumns;
-
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
           }
         }
 
       }
     );
 
+  }
+
+  ngOnDestroy(){
+    console.log('dialogo destruido');
   }
 
 }

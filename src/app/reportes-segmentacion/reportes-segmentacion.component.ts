@@ -61,7 +61,10 @@ export class ReportesSegmentacionComponent implements OnInit {
       width: '90%',
       data: {idzona: row.codigo}
     });
-
+    
+    /*dialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output:", data)
+    ); */   
 
   }
 

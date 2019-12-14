@@ -1,0 +1,77 @@
+@import '../../main-theme';
+
+
+.btn{
+    border: 1px solid transparent;
+    border-radius: 3px;
+    &-success{
+      background-color: lighten(#5cb85c, 15%);
+      border-color: lighten(#5cb85c, 10%);
+      color: darken(#5cb85c, 15%);
+    }
+  
+    &-warning{
+      background-color: lighten(#E2A41F, 15%);
+      border-color: lighten(#E2A41F, 10%);
+      color: darken(#E2A41F, 15%);
+    }
+    &-danger{
+      background-color: lighten(#d43f3a, 15%);
+      border-color: lighten(#d43f3a, 10%);
+      color: darken(#d43f3a, 15%);
+    }
+  
+  }
+
+
+
+mat-table{
+  position: relative;
+  height: calc( 70vh);
+  overflow: auto;
+}
+
+.table-viv{
+  height: calc( 30vh);
+  overflow: auto;
+}
+
+.table-ind{
+  
+  overflow: auto;
+}
+
+.croquis{
+  height: calc(40vh);
+  overflow: auto;
+}
+
+
+.mat-header-row{
+  
+  border: 1px solid mat-color($primary);
+  background: mat-color($primary);
+
+}
+
+.mat-header-cell{
+  color: $primary-color-text;
+}
+
+.mat-row {
+  border: 1px solid mat-color($primary);
+  //cursor: pointer;
+}
+
+/*
+.mat-row:hover{
+  background : mat-color($primary,100) ;
+}
+*/
+.active-aeu{
+  background : mat-color($primary,200) ;
+}
+
+.cell-viv{
+  padding: 0;
+}

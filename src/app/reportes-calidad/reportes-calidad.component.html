@@ -6,7 +6,7 @@
         <div fxLayout="row" fxLayoutGap="0.5%"  >
 
           <div class="contenedor-itemUbigeos" fxFlex="80">
-              <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of calidadService.itemsUbigeos; let indice=index ">
+              <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of reporteCalidadService.itemsUbigeos; let indice=index ">
                     {{itemUbigeo.text}}
             </div>
           </div>
@@ -14,7 +14,7 @@
           <mat-form-field fxFlex="20">
               <input matInput (keyup)="applyFilter($event)" placeholder="Buscador">
           </mat-form-field>
-
+         
 
         </div>
 
@@ -27,28 +27,9 @@
 
             <mat-cell *matCellDef="let element">
 
-            <ng-container *ngIf="column.data!='estado'">
-              <ng-container *ngIf="column.data=='porcent_avanc'">
-                {{element[column.data] | number:'1.2-2'}}
-              </ng-container>
-              <ng-container *ngIf="column.data!=='porcent_avanc'">
-                {{element[column.data]}}
-              </ng-container>
-            </ng-container>
-
-              <ng-container *ngIf="column.data=='estado'">
-                <ng-container *ngIf="element[column.data]==0">
-                  <button mat-raised-button class="btn btn-warning"> Pendiente </button>
-                </ng-container>
-                <ng-container *ngIf="element[column.data]==1">
-                  <button mat-raised-button class="btn btn-success" > Aceptado </button>
-                </ng-container>
-                <ng-container *ngIf="element[column.data]==2">
-                  <button  mat-raised-button class="btn btn-danger" > Rechazado </button>
-                </ng-container>
-              </ng-container>
-              
-
+   
+            
+ {{element[column.data]}}
               
             </mat-cell>
 

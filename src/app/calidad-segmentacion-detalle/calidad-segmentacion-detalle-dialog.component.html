@@ -1,0 +1,12 @@
+
+<div fxLayout="column"  fxLayout.xs="column"  fxLayoutAlign="center center" >
+  <h2 mat-dialog-title>{{data.titulo}}</h2>
+  <div mat-dialog-content>
+    <p> {{data.message}}</p>
+    <p> {{data.message2}}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="doAction()" color='primary'>Si</button>
+    <button mat-button (click)="closeDialog()" color='warn'>No Gracias</button>
+  </div>
+</div>

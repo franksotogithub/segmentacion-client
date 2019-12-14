@@ -7,6 +7,7 @@ import {CalidadSegmentacionComponent} from '../calidad-segmentacion/calidad-segm
 import {UsuariosComponent} from '../usuarios/usuarios.component';
 import {UsuariosDetalleComponent} from '../usuarios-detalle/usuarios-detalle.component';
 import {AuthGuard} from '../guards/auth.guard';
+import { ReportesCalidadComponent } from '../reportes-calidad/reportes-calidad.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'usuarios/detalle/:id', component: UsuariosDetalleComponent},
   {path: 'usuarios/crear', component: UsuariosDetalleComponent},
   {path: 'calidad', component: CalidadSegmentacionComponent, canActivate: [AuthGuard]},
+  {path: 'reportes_calidad', component: ReportesCalidadComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

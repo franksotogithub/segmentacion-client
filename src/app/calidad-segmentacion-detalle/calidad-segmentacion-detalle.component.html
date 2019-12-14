@@ -1,3 +1,81 @@
-<p>
-  calidad-segmentacion-detalle works!
-</p>
+<div fxLayout="row"  fxLayout.xs="column" fxLayoutWrap fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+
+  <div fxFlex="30">
+
+<div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="center" >
+    
+    
+    <button mat-raised-button class="btn btn-warning" (click)="generarMuestra($event)" > Generar Muestra </button>
+  
+    <mat-table   [dataSource]="dataAeus" class="example-table">
+      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns">
+        <mat-header-cell *matHeaderCellDef > {{column.label}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+      </ng-container>
+      <mat-header-row  *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+      <mat-row [ngStyle]="{cursor:pointer}" [class.active-aeu]="row=== aeu"   (click)="selectUbigeo(row,$event)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+    </mat-table>
+
+    <div fxLayout="row"  fxLayoutGap="5%" fxLayoutAlign="bottom bottom">
+
+      <button mat-raised-button class="btn btn-success" (click)="evaluarZonaCalidad()" fxFlex="50" > Evaluar Zona </button>
+      <button mat-raised-button mat-dialog-close class="btn btn-danger" (click)="close()" fxFlex="50" > Cerrar </button>
+    </div>
+  </div>
+  </div>
+  <div fxFlex="70">
+
+    <div fxLayout="column" fxLayoutGap="0.5%" fxLayoutAlign="center" >
+      <div class='croquis'>
+      <object  
+        [data]="urlCroquis"
+        type="application/pdf"
+        width="100%"
+        height="100%"
+        >
+        alt:  <a [href]="urlCroquis">Download the PDF</a>
+      </object>
+      </div>
+
+
+      <mat-table  [dataSource]="dataViv" class="table-viv">
+      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumnsViv">
+        <mat-header-cell *matHeaderCellDef > {{column.label}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[column.data]}} </mat-cell>
+      </ng-container>
+      <mat-header-row  *matHeaderRowDef="columnsToDisplayViv; sticky: true"></mat-header-row>
+      <mat-row   class="cell-viv" *matRowDef="let row; columns: columnsToDisplayViv;"></mat-row>
+      </mat-table>
+
+      
+      <mat-table  [dataSource]="dataAeuInd" class="table-id">
+      <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumnsInd">
+        <mat-header-cell *matHeaderCellDef > {{column.label}} </mat-header-cell>
+
+         
+         
+        <mat-cell *matCellDef="let element"> 
+
+        
+        <mat-slide-toggle name="autoRenewSub" (change)="actualizarIndicadores($event)"  [(ngModel)]="element[column.data]" color="warn"></mat-slide-toggle>
+        <br>
+        <ng-container *ngIf="element[column.data]==0">
+          Sin Error
+        </ng-container>
+          
+        <ng-container *ngIf="element[column.data]==1">
+          Con error
+        </ng-container>
+
+        </mat-cell>
+
+      </ng-container>
+      <mat-header-row  *matHeaderRowDef="columnsToDisplayInd; sticky: true"></mat-header-row>
+      <mat-row   *matRowDef="let row; columns: columnsToDisplayInd;"></mat-row>
+      </mat-table>
+      
+
+    </div>
+  </div>
+
+</div>

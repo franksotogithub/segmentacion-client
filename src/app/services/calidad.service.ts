@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, ReplaySubject} from "rxjs";
+import {Observable, of, ReplaySubject, BehaviorSubject } from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {ReporteAvanceSegmentacion} from "../interfaces/reporte";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -26,10 +26,18 @@ export class CalidadService {
   private loadedDataVivMuestraCalidad = new ReplaySubject<any>(1);
   loadedDataVivMuestraCalidad$ = this.loadedDataVivMuestraCalidad.asObservable();
 
+  private loadedDataIndAeuMuestraCalidad = new BehaviorSubject <any>('00');
+  loadedDataIndAeuMuestraCalidad$ = this.loadedDataIndAeuMuestraCalidad.asObservable();
+
+  public itemsUbigeos: any[] = [{'ambito': 0, 'codigo': '00', 'text': 'PERU'}];
+
+
   public ambito: any= 0;
+  public codigo : any ='00';
 
-
-
+  public aeu = new ReplaySubject<any>(1);
+  public aeu$ =  this.aeu.asObservable();
+  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
@@ -50,6 +58,7 @@ export class CalidadService {
     console.log('url Calidad:',url);
     return this.http.get<any>(url).pipe(
       tap(response => {
+        
         this.loadedDataAvanceCalidad.next(response);
       }),
       catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getDataAvanceCalidad `))
@@ -66,13 +75,24 @@ export class CalidadService {
     );
   }
 
-  getDataVivMuestraCalidad(idzona) {
-    const url = `${this.apiUrlCalidad}/viv_aeu_muestra_calidad/${idzona}`;
+  getDataVivMuestraCalidad(idaeu) {
+    const url = `${this.apiUrlCalidad}/viv_aeu_muestra_calidad/${idaeu}`;
     return this.http.get<any>(url).pipe(
       tap(response => {
         this.loadedDataVivMuestraCalidad.next(response);
       }),
-      catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getDataAeuMuestraCalidad `))
+      catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getDataVivMuestraCalidad `))
+    );
+  }
+
+  /*detalle_indicadores_aeu_muestra_calidad*/
+  getDataIndAeuMuestraCalidad(idaeu) {
+    const url = `${this.apiUrlCalidad}/detalle_indicadores_aeu_muestra_calidad/${idaeu}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+        this.loadedDataIndAeuMuestraCalidad.next(response);
+      }),
+      catchError(this.handleError<ReporteAvanceSegmentacion[]>(`getDataVivMuestraCalidad `))
     );
   }
 
@@ -93,10 +113,13 @@ export class CalidadService {
   }
 
   actualizarIndicadores(idaeu, aeu: any): Observable<any> {
-    const url = `${this.apiUrlCalidad}/evaluar_zona_calidad/${idaeu}`;
+    const url = `${this.apiUrlCalidad}/actualizar_indicadores/${idaeu}`;
     return this.http.put(url, aeu, httpOptions).pipe(
       tap(_ => console.log(`updated product id=${idaeu}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
+
+
+
 }
