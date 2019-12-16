@@ -1,9 +1,10 @@
 <mat-card class="my-card">
 
   <mat-card-content>
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <div class="conteiner">
+    <div class="row" >
 
-      <div fxFlex="50%">
+      <div class="col-md-6">
         <div >
 
           <app-esri-map-leyenda>
@@ -14,13 +15,13 @@
       </div>
 
 
-      <div fxFlex="50%" class="">
+      <div class="col-md-6">
 
 <!--
       <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
       
       -->
-      <div fxLayout="column">
+      <div>
           <div class="contenedor-itemUbigeos"  >
                 <div class="dmk-breadcrumbv1"  (click)="selectItemUbigeo(itemUbigeo,$event)" *ngFor=" let itemUbigeo of itemsUbigeos; let indice=index ">
                   {{itemUbigeo.text}}
@@ -30,34 +31,31 @@
 
           <mat-tab label="Reportes" >
 
-            <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="0.5%" fxLayoutAlign="center center">
-
-              <div fxFlex="35">
-                <mat-form-field>
+              <div>
+              <mat-form-field>
 
                   <input matInput (keyup)="applyFilter($event)" placeholder="Buscador">
                 </mat-form-field>
               </div>
-            </div>
-
+            
             <div class="example-table-container">
               <mat-table  [dataSource]="dataSource"  class="example-table mat-elevation-z8" matSort>
                 <ng-container [matColumnDef]="column.data" *ngFor="let column of displayedColumns" >
                   <mat-header-cell *matHeaderCellDef mat-sort-header > {{column.label}} </mat-header-cell>
-                 <!-- <div *ngIf="column=='porcent'; then thenBlock else elseBlock"></div>
-                  <mat-cell *matCellDef="let element">
 
-                    <ng-template #thenBlock>-->
 
-                    <!--</ng-template>-->
-
-                    <!--<ng-template #elseBlock>
-                    {{element[column.data]}}
-                    </ng-template>-->
-
-                  <mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="column.data=='porcent_segm'">
-                      {{element[column.data] | number:'1.2-2'}}
+                  <mat-cell *matCellDef="let element" >
+                    <ng-container *ngIf="column.data=='porcent_segm'"  >
+                       <div [ngStyle] ="{'background-color': (column.data==='porcent_segm') ? 
+                       (element[column.data]<20)?'rgb(231, 76, 60)':
+                       (element[column.data]<40)?'rgb(230, 126, 34)':
+                       (element[column.data]<60)?'rgb(243, 156, 18)':
+                       (element[column.data]<80)?'rgb(241, 196, 15)':'rgb(46, 204, 113)': 'white'}" >
+                       {{element[column.data] | number:'1.2-2'}} %
+                       </div>
+                          
+                      
+                      
                     </ng-container>
                     <ng-container *ngIf="column.data!=='porcent_segm'">
                       {{element[column.data]}}
@@ -94,7 +92,7 @@
     </div>
 -->
       </div>
-
+    </div>
     </div>
   </mat-card-content>
 </mat-card>

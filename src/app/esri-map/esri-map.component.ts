@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
 import {loadModules} from 'esri-loader';
 import {environment} from 'src/environments/environment';
 import {ReporteService} from '../services/reporte.service';
@@ -13,8 +13,9 @@ export class EsriMapComponent implements OnInit {
   @ViewChild('mapViewNode', {static: false})
   private mapViewEl: ElementRef;
 
+
   
-  private zoom = 6;
+  private zoom = 5;
   private center: Array<number> = [-75, -9.305];
   private basemap = 'streets';
   private map: any;
@@ -33,8 +34,9 @@ export class EsriMapComponent implements OnInit {
   private datos = [];
   private codigo = '00';
   private text = '';
-
-  constructor(private reporteService: ReporteService, private parametrosService: ParametrosService) {
+  //private capaLimites :any;
+  private capaLimites :[];
+  constructor(private reporteService: ReporteService, private parametrosService: ParametrosService , private renderer: Renderer2) {
   }
 
   cambiarAmbito(ambito) {
@@ -79,6 +81,23 @@ export class EsriMapComponent implements OnInit {
 
 
       this.map = new Map(this.mapViewEl.nativeElement, mapOptions);
+
+      /*
+      let homeButton = new HomeButton(
+        {
+          map:this.map
+        },this.homeButtonEl.nativeElement
+      );
+
+    
+      homeButton.startup();
+      this.homeButtonEl.nativeElement.addEventListener('on','click',()=>{
+        console.log('click botton');
+      });
+*/
+    
+      
+
       console.log('this.map>>>', this.map);
     } catch (error) {
       console.log('EsriLoader: ', error);
@@ -86,10 +105,7 @@ export class EsriMapComponent implements OnInit {
     }
   }
 
-  /*selectUbigeo(row,event) {
-    let ambito=this.ambito+1;
-    this.parametrosService.cambiarParametros({ambito: ambito ,codigo: row.codigo ,text:row.descripcion});
-  }*/
+ 
 
 
   selectUbigeo(options) {
@@ -104,23 +120,38 @@ export class EsriMapComponent implements OnInit {
     this.actualizarCapaTematico(this.datos, this.ambito, [this.codigo]);
   }
 
-  async addCapa(url, index) {
+  async addCapaLimite(url,index){
     try {
+      
       var capa = {};
-      const [FeatureLayer] = await loadModules(['esri/layers/FeatureLayer'], this.optionsApi);
+      const [FeatureLayer,Color, SimpleFillSymbol, SimpleLineSymbol, UniqueValueRenderer] = await loadModules(['esri/layers/FeatureLayer',
+      'esri/Color',
+        'esri/symbols/SimpleFillSymbol', 'esri/symbols/SimpleLineSymbol',
+        'esri/renderers/UniqueValueRenderer'], this.optionsApi);
+
       var urlFeature = `${url}/${index}`;
       var visible = false;
       (this.ambitoInicial == index) ? visible = true : false;
+
+      var defaultSymbol = new SimpleFillSymbol(
+        'solid'
+        , new SimpleLineSymbol('solid', new Color([0, 0, 0, 1]), 1)
+        , new Color([0, 0, 0, 0]));
+
+      var layerRenderer = new UniqueValueRenderer({
+        'type': 'uniqueValue',
+        'field1': 'CODIGO',
+        'uniqueValueInfos': [],
+        'defaultSymbol': defaultSymbol,
+      });
 
       var layer = new FeatureLayer(urlFeature, {
         maxScale: 0,
         minScale: 0,
         showLabels: true,
-        visible: visible
-
+        visible: visible,
+        
       });
-
-      capa = {layer: layer, id: index};
 
 
       layer.on('click', (event) => {
@@ -142,6 +173,61 @@ export class EsriMapComponent implements OnInit {
 
       });
 
+
+      layer.setRenderer(layerRenderer);
+      layer.redraw();
+      
+      
+      capa = {layer: layer, id: index};
+      this.capasTematicos.push(capa);
+      this.map.addLayer(layer);
+    }
+    catch (error){
+
+      
+    }
+
+  }
+
+
+  async addCapa(url, index) {
+    try {
+      var capa = {};
+      const [FeatureLayer] = await loadModules(['esri/layers/FeatureLayer'], this.optionsApi);
+      var urlFeature = `${url}/${index}`;
+      var visible = false;
+      (this.ambitoInicial == index) ? visible = true : false;
+
+      var layer = new FeatureLayer(urlFeature, {
+        maxScale: 0,
+        minScale: 0,
+        showLabels: false,
+        visible: visible
+
+      });
+
+      capa = {layer: layer, id: index};
+
+/*
+      layer.on('click', (event) => {
+        let options = {atributos: '00', geometry: '', screenPoint: ''};
+        options.atributos = event.graphic.attributes;
+        options.geometry = event.graphic.geometry;
+        options.screenPoint = event.screenPoint;
+        this.selectFeature(options,1);
+
+      });
+
+
+      layer.on('dbl-click', (event) => {
+        let options = {atributos: '00', geometry: '', screenPoint: ''};
+        options.atributos = event.graphic.attributes;
+        options.geometry = event.graphic.geometry;
+        options.screenPoint = event.screenPoint;
+        this.selectUbigeo(options);
+
+      });*/
+
       this.map.addLayer(layer);
       this.capasTematicos.push(capa);
 
@@ -151,6 +237,7 @@ export class EsriMapComponent implements OnInit {
     }
 
   }
+
 
 
   async actualizarCapaTematico(res, index, codigos) {
@@ -211,8 +298,13 @@ export class EsriMapComponent implements OnInit {
 
       var capa = this.capasTematicos.find(x => x.id == index);
       capa['datos'] = res;
-      capa.layer.setRenderer(layerRenderer);
-      capa.layer.redraw();
+
+
+      ////////////////////////////
+        capa.layer.setRenderer(layerRenderer);
+        capa.layer.redraw();
+        console.log(`capa ${capa.layer} cargada`)
+      
       //capa.layer.set showLabels: true,
       //capa.layer.set(showLabels: true,
 
@@ -257,8 +349,9 @@ export class EsriMapComponent implements OnInit {
 
       queryTask.executeForExtent(query, (result) => {
         console.log('result>>>>', result);
+        
         this.map.setExtent(result.extent);
-
+        
       });
 
     } catch (error) {
@@ -270,20 +363,32 @@ export class EsriMapComponent implements OnInit {
 
   ngOnInit() {
     this.inicializarMapa().then(_ => {
+      //this.addCapaLimites(this.apiEndPointMap,[0]);
       this.ambitos.forEach(a => {
+
         this.addCapa(this.apiEndPointMap, a).then(_ => {
 
         });
+        this.addCapaLimite(this.apiEndPointMap, a).then(_ => {
 
+        });
+
+      
       });
+
+      
+
 
 
       this.reporteService.getLoadedDataMapaSource().subscribe(res => {
           this.ambito = this.parametrosService.params.ambito;
           this.codigo = this.parametrosService.params.codigo;
           this.datos = res;
+
+          
+
           this.actualizarCapaTematico(res, this.ambito, []).then(_ => {
-            this.cambiarAmbito(this.ambito);
+            
             if (this.codigo !== '00') {
               let queryText = this.getQueryText([this.codigo]);
               let urlText = `${this.apiEndPointMap}/${this.ambito}`;
@@ -292,7 +397,10 @@ export class EsriMapComponent implements OnInit {
               this.map.centerAndZoom(this.center, this.zoom);
             }
 
+            this.cambiarAmbito(this.ambito);
           });
+
+          
         }
       );
 

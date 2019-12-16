@@ -37,6 +37,10 @@
             </ng-container>
 
               <ng-container *ngIf="column.data=='estado'">
+                  <ng-container *ngIf="element[column.data]==-1">
+                      <button mat-raised-button class="btn btn-danger"> Sin procesar </button>
+                  </ng-container>
+
                 <ng-container *ngIf="element[column.data]==0">
                   <button mat-raised-button class="btn btn-warning"> Pendiente </button>
                 </ng-container>

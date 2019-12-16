@@ -27,9 +27,14 @@
 
             <mat-cell *matCellDef="let element">
 
-   
+                <ng-container *ngIf="column.data==='tasa_error'">
+                    {{element[column.data] | number:'1.2-2'}}
+                </ng-container>
             
- {{element[column.data]}}
+                <ng-container *ngIf="column.data!=='tasa_error'">
+                    {{element[column.data]}}
+                </ng-container>
+                
               
             </mat-cell>
 

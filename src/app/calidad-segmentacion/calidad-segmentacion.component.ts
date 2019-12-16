@@ -3,7 +3,7 @@ import {CalidadService} from '../services/calidad.service'
 import {CalidadSegmentacionDetalleComponent} from "../calidad-segmentacion-detalle/calidad-segmentacion-detalle.component";
 import {MatDialog, MatSort, MatTableDataSource} from "@angular/material";
 import {MatPaginator} from '@angular/material/paginator';
-
+import { ReporteDialogBoxComponent } from "../reporte-dialog-box/reporte-dialog-box.component";
 @Component({
   selector: 'app-calidad-segmentacion',
   templateUrl: './calidad-segmentacion.component.html',
@@ -17,7 +17,7 @@ export class CalidadSegmentacionComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   itemsUbigeos=[];
 
-  constructor(private calidadService: CalidadService, public dialog: MatDialog) {
+  constructor(private calidadService: CalidadService, public dialog: MatDialog ,) {
   }
 
   selectUbigeo(row, event) {
@@ -30,7 +30,14 @@ export class CalidadSegmentacionComponent implements OnInit {
       this.calidadService.getDataAvanceCalidad({ambito: this.calidadService.ambito, codigo: this.calidadService.codigo}).subscribe(res=>{});
 
     } else {
-      this.openDialog(row);
+
+      if(row.estado>-1){
+        this.openDialog(row);
+      }
+      else{
+        this.openDialogFaild(row);
+      }
+      
     }
   }
 
@@ -59,6 +66,15 @@ export class CalidadSegmentacionComponent implements OnInit {
       } 
     );
 
+  }
+  openDialogFaild(row): void {
+
+    
+    const dialogRef = this.dialog.open(ReporteDialogBoxComponent, {
+      width: '20%',
+      data: {zona: row.zona}
+    });
+    
   }
 
   applyFilter(event) {

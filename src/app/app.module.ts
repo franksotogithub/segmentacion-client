@@ -27,6 +27,7 @@ import { EsriMapLeyendaComponent } from './esri-map-leyenda/esri-map-leyenda.com
 import { CalidadSegmentacionComponent } from './calidad-segmentacion/calidad-segmentacion.component';
 import { CalidadSegmentacionDetalleComponent,DialogOverviewExampleDialog } from './calidad-segmentacion-detalle/calidad-segmentacion-detalle.component';
 import { ReportesCalidadComponent } from './reportes-calidad/reportes-calidad.component';
+import { ReporteDialogBoxComponent } from './reporte-dialog-box/reporte-dialog-box.component';
 //import {MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ReportesCalidadComponent } from './reportes-calidad/reportes-calidad.co
     CalidadSegmentacionComponent,
     CalidadSegmentacionDetalleComponent,
     DialogOverviewExampleDialog,
-    ReportesCalidadComponent
+    ReportesCalidadComponent,
+    ReporteDialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +65,12 @@ import { ReportesCalidadComponent } from './reportes-calidad/reportes-calidad.co
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting ] } 
   ],
-  entryComponents: [ ReportesSegmentacionDetalleComponent,
-    UsuarioDialogBoxComponent,CalidadSegmentacionDetalleComponent,
-    DialogOverviewExampleDialog
+  entryComponents: [ 
+    ReportesSegmentacionDetalleComponent,
+    UsuarioDialogBoxComponent,
+    CalidadSegmentacionDetalleComponent,
+    DialogOverviewExampleDialog,
+    ReporteDialogBoxComponent,
   ],
   bootstrap: [AppComponent]
 })

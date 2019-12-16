@@ -1,21 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EsriMapComponent } from './esri-map.component';
+import { ReporteDialogBoxComponent } from './reporte-dialog-box.component';
 
-describe('EsriMapComponent', () => {
-  let component: EsriMapComponent;
-  let fixture: ComponentFixture<EsriMapComponent>;
+describe('ReporteDialogBoxComponent', () => {
+  let component: ReporteDialogBoxComponent;
+  let fixture: ComponentFixture<ReporteDialogBoxComponent>;
 
-  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EsriMapComponent ]
+      declarations: [ ReporteDialogBoxComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EsriMapComponent);
+    fixture = TestBed.createComponent(ReporteDialogBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
